@@ -1,5 +1,4 @@
-.card-layout{height:350px}.tableIcons{font-size:1.2rem!important}.site-layout-background{background:#fff}.site-layout-content-size{height:100%;margin:0;min-height:280px;padding:24px}.site-layout-content-padding{margin:0;padding:24px}.bck-white{background:#fff}.site-page-header-ghost-wrapper{background-color:#fff;margin-bottom:12px}.site-page-border{border:1px solid #ebedf0}
-
+.site-layout-content{background:#fff;min-height:280px;padding:24px}.logo{background:hsla(0,0%,100%,.3);float:left;height:31px;margin:16px 24px 16px 0;width:120px}.ant-row-rtl .logo{float:right;margin:16px 0 16px 24px}[data-theme=dark] .site-layout-content{background:#141414}
 /*!
  * 
  * antd v4.16.13
