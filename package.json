@@ -2,7 +2,7 @@
   "name": "custom-web-creator",
   "version": "0.0.28",
   "description": "",
-  "main": "/server.js",
+  "main": "server.js",
   "engines": {
     "node": ">=14.18.1"
   },
