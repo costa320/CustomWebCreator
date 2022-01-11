@@ -1,0 +1,17 @@
+.row-dragging {
+  background: #fafafa;
+  border: 1px solid #ccc;
+}
+
+.row-dragging td {
+  padding: 16px;
+}
+
+.row-dragging .drag-visible {
+  visibility: visible;
+}
+
+/* when u drag a row it goes under the drawer, this prevents it */
+body tr {
+  z-index: 1000;
+}

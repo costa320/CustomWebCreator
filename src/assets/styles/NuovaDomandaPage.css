@@ -1,0 +1,234 @@
+#nuovaDomanda .nav-tabs .nav-item {
+  display: initial !important;
+}
+
+.nav-link-mod {
+  border-radius: 0;
+  font-weight: 600;
+  color: #5b6f82;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0.778rem 1.333em;
+  -webkit-box-flex: 1;
+  -ms-flex: 1 0 auto;
+  flex: none;
+  white-space: none;
+  line-height: 1em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.noFlex {
+  display: initial !important;
+}
+
+.active-mod {
+  border-bottom: 3px solid #06c;
+}
+
+/* DATE PICKER ANTD OVERWRITE */
+
+.bck-mod {
+  background-color: #eceff3 !important;
+}
+
+.datePicker-mod {
+  color: #435a70;
+  border: none;
+  border-bottom: 1px solid #5c6f82;
+  height: 2.5rem;
+  border-radius: 0px !important;
+}
+.datePicker-mod input {
+  border: none;
+  border-radius: 0;
+  padding: 0.375rem 0.5rem;
+  outline: 0;
+  height: 2.5rem;
+  width: 100%;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-transition: 0.2s ease-out;
+  transition: 0.2s ease-out;
+  font-weight: 700;
+}
+.datePicker-mod:hover {
+  border-color: #5c6f82 !important;
+}
+
+.datePicker-mod-forzatura {
+  height: 25px !important;
+}
+
+.label-mod {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  color: #435a70;
+  background-color: transparent;
+  position: absolute;
+  font-weight: 600;
+  line-height: calc(2.5rem - 1px);
+  top: 0;
+  font-size: 1rem;
+  cursor: text;
+  display: block;
+  width: 100% !important;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 0.5rem;
+  -webkit-transform: translateY(-75%);
+  transform: translateY(-75%);
+  font-size: 0.777rem;
+  color: #4c4c4d;
+  padding-left: 0px !important;
+}
+
+.font-size-sm-mod {
+  font-size: 0.777rem;
+}
+
+/* AntdEditableCell */
+.AntdEditableCell {
+  text-align: center !important;
+  border: 1px solid #5c6f82 !important;
+}
+
+/* MOD OF ANTD SELECT */
+.antd-select-mod .ant-select-selector {
+  background-color: #eceff3 !important ;
+  color: #435a70 !important;
+  font-weight: bold !important;
+  border: none !important;
+  border-bottom: 1px solid #5c6f82 !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  border: none !important;
+  border-bottom: 1px solid #5c6f82 !important;
+  border-radius: 0 !important;
+  padding: 0.375rem 0.5rem !important;
+  height: 2.5rem !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+/* MOD COLLAPSE */
+.collapse-head-mod {
+  padding: 12px 24px !important;
+  font-size: 16px !important;
+  white-space: initial !important;
+  text-decoration: none !important;
+  color: #fff !important;
+  background-color: #5c6f82 !important;
+  border-color: #5c6f82 !important;
+  -webkit-box-shadow: inset 0 1px 0 rgb(255 255 255 / 15%),
+    0 1px 1px rgb(0 0 0 / 8%) !important;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 15%), 0 1px 1px rgb(0 0 0 / 8%) !important;
+}
+
+.collapse-head-mod:before {
+  color: white !important;
+}
+
+/* MOD NOTIFICATIONS */
+.mod-notifications {
+  width: 100%;
+  /* top right bottom left */
+  padding: 1.5rem 4rem 1.5rem 1.5rem;
+  -webkit-box-shadow: 0 -0.5rem 1rem rgb(0 0 0 / 15%) !important;
+  box-shadow: 0 -0.5rem 1rem rgb(0 0 0 / 15%) !important;
+  background: #fff;
+  border-radius: 4px;
+  border-left: 4px solid #2f82d5;
+}
+
+.mod-notifications .mod-info {
+  border-left: 4px solid #2f82d5 !important;
+}
+.mod-notifications .mod-warning {
+  border-left: 4px solid #a66300 !important;
+}
+.mod-notifications .mod-error {
+  border-left: 4px solid #d9364f !important;
+}
+.mod-notifications .mod-success {
+  border-left: 4px solid #3fa581 !important;
+}
+
+.mod-notifications .mod-notifications-header {
+  align-items: center;
+}
+
+.ant-message-notice-content {
+  background: transparent;
+}
+
+/* FORZATURE */
+.title-mod-forzature {
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #a66300;
+}
+
+.checkbox-mod-forzature {
+  font-family: Lora, Georgia, serif;
+  font-size: 0.889rem;
+  color: black;
+}
+
+.message-mod-forzature {
+  font-family: Lora, Georgia, serif;
+  font-size: 0.889rem;
+  color: #5b6f82;
+}
+
+.dynamic-radio-forzatura > span:nth-child(2) {
+  display: flex !important;
+}
+
+/* SKELETON MOD */
+
+.skeleton-title-mod h3 {
+  width: 100% !important;
+}
+
+/* antd-btn-mod */
+.antd-btn-mod:focus {
+  color: #fff !important;
+  background-color: #5c6f82 !important;
+  border-color: #5c6f82 !important;
+  -webkit-box-shadow: inset 0 1px 0 rgb(255 255 255 / 15%),
+    0 1px 1px rgb(0 0 0 / 8%) !important;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 15%), 0 1px 1px rgb(0 0 0 / 8%) !important;
+}
+
+.icons-mod {
+  font-size: 1.5em !important;
+  color: #5c6f82;
+}
+
+.icons-mod:hover {
+  color: #2f82d5;
+}
+
+/* FILTER MOD ANTD */
+
+.FilterAntd-mod {
+  -webkit-box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%),
+    0 6px 16px 0 rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%) !important;
+  box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px 0 rgb(0 0 0 / 8%),
+    0 9px 28px 8px rgb(0 0 0 / 5%) !important;
+}
+
+/* TEXT AREA ON FOCUS */
+textarea:focus {
+  border: 1px solid black !important;
+}

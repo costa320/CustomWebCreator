@@ -1,0 +1,31 @@
+.logo {
+  float: left;
+  width: 120px;
+  height: 43px;
+  margin: 10px 24px 10px 0;
+  /* background: rgba(255, 255, 255, 0.3); */
+  /* background: url(../img/Logo.png); */
+  /*   background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center; */
+}
+
+.user {
+  height: 64px;
+  position: absolute;
+  right: 40px;
+  display: flex;
+}
+
+.userName {
+  vertical-align: 15px;
+}
+
+.userName .ant-space-item {
+  height: 16px !important;
+}
+
+.ant-row-rtl .logo {
+  float: right;
+  margin: 16px 0 16px 24px;
+}
