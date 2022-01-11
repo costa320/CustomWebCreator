@@ -12,7 +12,7 @@ import ErrorPage from "./views/ErrorPage.jsx";
 /*    MANAGERS */
 /* COMPONENTS */
 /* ANTD */
-import { BackTop } from "antd";
+import { BackTop, Layout, Menu, Breadcrumb } from "antd";
 import {
   FilterOutlined,
   HomeOutlined,
@@ -45,7 +45,6 @@ class App extends Component {
         },
       ],
       /* browsable Routes just for ui, real routes are baseRoutes */
-
     };
   }
 
@@ -70,19 +69,42 @@ class App extends Component {
   }
 
   render() {
+    const { Header, Content, Footer } = Layout;
     let s = this.state;
     let { Routes, baseRoutes } = s;
     return (
       <>
         <BackTop />
         <ErrorBoundary>
-            <Switch>
-              {baseRoutes &&
-                baseRoutes.map((route) => {
-                  return <Route {...route} />;
+          <Layout className="layout">
+            <Header>
+              <div className="logo" />
+              <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
+                {new Array(15).fill(null).map((_, index) => {
+                  const key = index + 1;
+                  return <Menu.Item key={key}>{`nav ${key}`}</Menu.Item>;
                 })}
-            </Switch>
-         {/*  <SideBar Routes={Routes}></SideBar> */}
+              </Menu>
+            </Header>
+            <Content style={{ padding: "0 50px" }}>
+              <Breadcrumb style={{ margin: "16px 0" }}>
+                <Breadcrumb.Item>Home</Breadcrumb.Item>
+                <Breadcrumb.Item>List</Breadcrumb.Item>
+                <Breadcrumb.Item>App</Breadcrumb.Item>
+              </Breadcrumb>
+              <div className="site-layout-content">
+                <Switch>
+                  {baseRoutes &&
+                    baseRoutes.map((route) => {
+                      return <Route {...route} />;
+                    })}
+                </Switch>
+              </div>
+            </Content>
+            <Footer style={{ textAlign: "center" }}>
+              Ant Design ©2018 Created by Ant UED
+            </Footer>
+          </Layout>
         </ErrorBoundary>
       </>
     );

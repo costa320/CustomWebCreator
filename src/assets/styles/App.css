@@ -1,29 +1,19 @@
-.site-layout-background {
+.site-layout-content {
+  min-height: 280px;
+  padding: 24px;
   background: #fff;
 }
-
-.site-layout-content-size {
-  padding: 24px;
-  margin: 0;
-  height: 100%;
-  min-height: 280px;
+.logo {
+  float: left;
+  width: 120px;
+  height: 31px;
+  margin: 16px 24px 16px 0;
+  background: rgba(255, 255, 255, 0.3);
 }
-
-.site-layout-content-padding {
-  padding: 24px;
-  margin: 0;
+.ant-row-rtl .logo {
+  float: right;
+  margin: 16px 0 16px 24px;
 }
-
-.bck-white {
-  background: white;
-}
-
-.site-page-header-ghost-wrapper {
-  /*  padding: 24px; */
-  margin-bottom: 12px;
-  background-color: #ffffff;
-}
-
-.site-page-border {
-  border: 1px solid rgb(235, 237, 240);
-}
+  [data-theme="dark"] .site-layout-content {
+    background: #141414;
+  }
