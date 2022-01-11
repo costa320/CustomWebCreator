@@ -135,6 +135,7 @@ module.exports = (env) => {
         },
       },
     },
+    node: { fs: "empty", net: "empty", tls: "empty", dns: "empty" },
     devServer: {
       contentBase: path.join(__dirname, "public"),
       open: {
