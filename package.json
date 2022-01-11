@@ -3,10 +3,7 @@
   "version": "0.0.31",
   "description": "",
   "main": "server.js",
-  "engines": {
-    "node": "=16.13.2",
-    "npm": "8.1.2"
-  },
+
   "scripts": {
     "start:dev": "grunt bump:patch && webpack serve --open --mode development --progress",
     "start:serve": "webpack serve --open --mode development --progress",
