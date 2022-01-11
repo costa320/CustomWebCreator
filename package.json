@@ -3,7 +3,6 @@
   "version": "0.0.31",
   "description": "",
   "main": "server.js",
-
   "scripts": {
     "start:dev": "grunt bump:patch && webpack serve --open --mode development --progress",
     "start:serve": "webpack serve --open --mode development --progress",
@@ -11,9 +10,9 @@
     "build:prod": "grunt bump:patch && webpack --config ./webpack.prod.config.js --progress",
     "build:dev": "grunt bump:patch && webpack --progress",
     "azurepostscript": "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag v$PACKAGE_VERSION && git push --tags",
-    "test": "jest",
     "start": "node server.js",
     "build-heroku:prod": "webpack --config ./webpack.prod.config.js --progress",
+    "heroku-prebuild": "npm i -f",
     "heroku-postbuild": "npm run build-heroku:prod"
   },
   "author": "Constantin Iacovlev",
