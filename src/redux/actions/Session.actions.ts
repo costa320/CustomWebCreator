@@ -1,4 +1,4 @@
-import { Routes } from '../reducers/Session.reducer';
+import { Route } from '../reducers/Session.reducer';
 
 
 
@@ -17,7 +17,7 @@ export function Set_user(userProperties: any) {
   return { type: "SET_USER", payload: userProperties };
 }
 
-export function SetRoutes(arrRoutes: Routes) {
+export function SetRoutes(arrRoutes: [Route]) {
   /* CHIAMATA AJAX QUI */
   return { type: "SET_ROUTES", payload: arrRoutes };
 }

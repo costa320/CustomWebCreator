@@ -11,13 +11,7 @@ import App from "./App.jsx";
 /* STYLE */
 import "antd/dist/antd.css";
 
-console.info(`
-██╗███╗░░██╗██████╗░░██████╗
-██║████╗░██║██╔══██╗██╔════╝
-██║██╔██╗██║██████╔╝╚█████╗░
-██║██║╚████║██╔═══╝░░╚═══██╗
-██║██║░╚███║██║░░░░░██████╔╝
-╚═╝╚═╝░░╚══╝╚═╝░░░░░╚═════╝░`);
+console.info(``);
 console.info(`Git Version: `, process.env.REACT_APP_VERSION);
 console.info(`Enviroment: `, process.env.enviroment);
 
