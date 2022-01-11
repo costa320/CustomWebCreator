@@ -1,8 +1,11 @@
 {
-  "name": "react-app-manager-ammortizzatori-sociali",
-  "version": "0.0.25",
+  "name": "custom-web-creator",
+  "version": "0.0.28",
   "description": "",
   "main": "/server.js",
+  "engines": {
+    "node": ">=14.18.1"
+  },
   "scripts": {
     "start:dev": "grunt bump:patch && webpack serve --open --mode development --progress",
     "start:serve": "webpack serve --open --mode development --progress",

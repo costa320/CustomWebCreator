@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import { createLogger } from "redux-logger";
 import createRootReducer from "./reducers";
 import { createBrowserHistory } from "history";
-
+import { routerMiddleware } from "connected-react-router";
 import thunk from "redux-thunk";
 
 export const history = createBrowserHistory();
@@ -36,28 +36,37 @@ const logger = createLogger({
 
 const persistedState = loadFromSessionStorage();
 
-let middlewares;
-
+let middlewares = {
+  apply: null,
+  plain: null,
+};
 if (process.env.enviroment === "DEV") {
-  middlewares = applyMiddleware(logger, thunk);
+  middlewares.apply = applyMiddleware(logger, thunk);
+  middlewares.plain = [logger, thunk];
 } else {
   middlewares = applyMiddleware(thunk);
+  middlewares.plain = [thunk];
 }
 
 //dev tools
-const composeEnhancers =
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ||
-  compose(
-    applyMiddleware(
-      routerMiddleware(history) // for dispatching history actions
-      // ... other middlewares ...
-    )
-  );
+const composeEnhancers = () => {
+  if (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) {
+    return window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__(middlewares.apply);
+  } else {
+    return compose(
+      applyMiddleware(
+        routerMiddleware(history), // for dispatching history actions
+        ...middlewares.plain
+        // ... other middlewares ...
+      )
+    );
+  }
+};
 
 const store = createStore(
   createRootReducer(history),
   persistedState,
-  composeEnhancers(middlewares)
+  composeEnhancers()
 );
 
 store.subscribe(() => {
