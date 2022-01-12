@@ -12,7 +12,15 @@ import ErrorPage from "./views/ErrorPage.jsx";
 /*    MANAGERS */
 /* COMPONENTS */
 /* ANTD */
-import { BackTop, Layout, Menu, Breadcrumb } from "antd";
+import {
+  BackTop,
+  Layout,
+  Menu,
+  Breadcrumb,
+  PageHeader,
+  Button,
+  Anchor,
+} from "antd";
 import {
   FilterOutlined,
   HomeOutlined,
@@ -36,7 +44,7 @@ class App extends Component {
         {
           key: "Home-KEY",
           exact: true,
-          path: `${get_preFix()}/`,
+          path: `/`,
           component: HomePage,
         },
         {
@@ -87,6 +95,26 @@ class App extends Component {
               </Menu>
             </Header>
             <Content style={{ padding: "0 50px" }}>
+              <Anchor>
+                <PageHeader
+                  className="site-page-header-ghost-wrapper"
+                  ghost={false}
+                  onBack={null}
+                  title="Home Page"
+                  subTitle="Gestione della HomePage"
+                  extra={[
+                    <Button key="3" disabled>
+                      Operation 3
+                    </Button>,
+                    <Button key="2" disabled>
+                      Operation 2
+                    </Button>,
+                    <Button key="1" type="primary">
+                      Aggiungi Widget
+                    </Button>,
+                  ]}
+                />
+              </Anchor>
               <Breadcrumb style={{ margin: "16px 0" }}>
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
                 <Breadcrumb.Item>List</Breadcrumb.Item>

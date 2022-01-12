@@ -4,7 +4,17 @@ import { Redirect } from "react-router";
 import { connect } from "react-redux";
 import { RESET_ALL_REDUCERS } from "../redux/actions/Session.actions";
 /* ANTD */
-import { Row, Col, Card, Button, Space, Layout, Menu, Breadcrumb } from "antd";
+import {
+  Row,
+  Col,
+  Slider,
+  Card,
+  Button,
+  Space,
+  Layout,
+  Menu,
+  Breadcrumb,
+} from "antd";
 import {
   DoubleRightOutlined,
   RedoOutlined,
@@ -25,6 +35,9 @@ class HomePage extends Component {
         pathname: null,
         state: {},
       },
+      gutterKey: 1,
+      vgutterKey: 1,
+      colCountKey: 2,
     };
   }
 
@@ -39,10 +52,9 @@ class HomePage extends Component {
     return (
       <>
         {s.redirect.pathname ? <Redirect push to={s.redirect} /> : null}
-        <Row gutter={[24, 16]}>
-          <Col xs={24} sm={24} md={24} lg={16} xl={16}>
-            HELLO THERE!!!
-          </Col>
+
+        <Row>
+          <Col>HI there</Col>
         </Row>
       </>
     );
