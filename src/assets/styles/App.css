@@ -21,6 +21,7 @@
 
 .site-page-header-ghost-wrapper {
   border: 1px solid rgb(235, 237, 240);
+  margin-bottom: 12px !important;
 }
 .ant-anchor {
   padding-left: 0px !important;

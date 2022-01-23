@@ -1,3 +1,4 @@
+import * as React from 'react';
 /* MODELS */
 import {
   Section_Autocertificazioni, Section_Messaggi,
@@ -5,19 +6,14 @@ import {
 
 const Site = (
   state: State = {
-
-    /* 1 o 1 ; route <==> page */
     Routes: [
       {
         id: 'home',
         path: '/',
         label: 'Home',
-        state: {
-          /*   from: '/',
-            fromLabel: 'Home' */
-        },
+        state: {},
         exact: true
-      }
+      },
     ],
 
     /* you may have multiple pages that will go to one route */
@@ -26,20 +22,215 @@ const Site = (
         routeId: 'home',
         rows: [
           {
-            hgutters: 8, /* [0, 2, 4, 8, 16, 24, 32, 40, 48] */
-            vgutters: 16, /* [0, 2, 4, 8, 16, 24, 32, 40, 48] */
-            colsCounts: 1, /* [1, 2, 3, 4, 6, 8, 12] */
+            row_id: 0,
+            hgutters: 8, /* [0, 2, 4, 8, 16, 24, 32, 40, 48] horizzontal */
+            vgutters: 16, /* [0, 2, 4, 8, 16, 24, 32, 40, 48] vertical */
+            justify: 'start', /* start | end | center | space-around | space-between */
+            align: null, /* top | middle | bottom */
             cols: [
               {
-                componentName: 'table',
-                componentProps: {},/* depend on choosen component */
-                ApiEndpoint: ''
+                col_id: 0,
+                row_id: 0,
+                generalGrid: {
+                  span: 24,
+                  offset: null,
+                  flex: null,
+                  order: 1,
+                },
+                ComplexGridEnabled: false,
+                complexGrid: {
+                  xs: {
+                    /* screen < 576px */
+                    span: 6,
+                    offset: null,
+                    flex: null,
+                    order: 1,
+                  },
+                  sm: {
+                    /* screen ≥ 576px */
+                    span: 6,
+                    offset: null,
+                    flex: null,
+                    order: 1,
+                  },
+                  md: {
+                    /* screen ≥ 768px */
+                    span: 6,
+                    offset: null,
+                    flex: null,
+                    order: 1,
+                  },
+                  lg: {
+                    /* screen ≥ 992px */
+                    span: 6,
+                    offset: null,
+                    flex: null,
+                    order: 1,
+                  },
+                  xl: {
+                    /* screen ≥ 1200px */
+                    span: 6,
+                    offset: null,
+                    flex: null,
+                    order: 1,
+                  },
+                  xxl: {
+                    /* screen ≥ 1600px */
+                    span: 6,
+                    offset: null,
+                    flex: null,
+                    order: 1,
+                  },
+                },
+                component: {
+                  name: 'Table',
+                  props: {
+                    columns: [
+                      {
+                        title: 'Name',
+                        dataIndex: 'name',
+                        key: 'name',
+                      },
+                      {
+                        title: 'Age',
+                        dataIndex: 'age',
+                        key: 'age',
+                      },
+                      {
+                        title: 'Address',
+                        dataIndex: 'address',
+                        key: 'address',
+                      },
+                    ],
+                    dataSource: [
+                      {
+                        key: '1',
+                        name: 'Mike',
+                        age: 32,
+                        address: '10 Downing Street',
+                      },
+                      {
+                        key: '2',
+                        name: 'John',
+                        age: 42,
+                        address: '10 Downing Street',
+                      }
+                    ]
+                  },
+                  ApiEndpoint: ''
+                }
               }
             ]
           }
         ]
       }
     },
+    CurrentPage: {
+      routeId: 'home',
+      rows: [
+        {
+          row_id: 0,
+          hgutters: 8, /* [0, 2, 4, 8, 16, 24, 32, 40, 48] horizzontal */
+          vgutters: 16, /* [0, 2, 4, 8, 16, 24, 32, 40, 48] vertical */
+          justify: 'start', /* start | end | center | space-around | space-between */
+          align: null, /* top | middle | bottom */
+          cols: [
+            {
+              col_id: 0,
+              row_id: 0,
+              generalGrid: {
+                span: 24,
+                offset: null,
+                flex: null,
+                order: 1,
+              },
+              ComplexGridEnabled: false,
+              complexGrid: {
+                xs: {
+                  /* screen < 576px */
+                  span: 6,
+                  offset: null,
+                  flex: null,
+                  order: 1,
+                },
+                sm: {
+                  /* screen ≥ 576px */
+                  span: 6,
+                  offset: null,
+                  flex: null,
+                  order: 1,
+                },
+                md: {
+                  /* screen ≥ 768px */
+                  span: 6,
+                  offset: null,
+                  flex: null,
+                  order: 1,
+                },
+                lg: {
+                  /* screen ≥ 992px */
+                  span: 6,
+                  offset: null,
+                  flex: null,
+                  order: 1,
+                },
+                xl: {
+                  /* screen ≥ 1200px */
+                  span: 6,
+                  offset: null,
+                  flex: null,
+                  order: 1,
+                },
+                xxl: {
+                  /* screen ≥ 1600px */
+                  span: 6,
+                  offset: null,
+                  flex: null,
+                  order: 1,
+                },
+              },
+              component: {
+                name: 'Table',
+                props: {
+                  columns: [
+                    {
+                      title: 'Name',
+                      dataIndex: 'name',
+                      key: 'name',
+                    },
+                    {
+                      title: 'Age',
+                      dataIndex: 'age',
+                      key: 'age',
+                    },
+                    {
+                      title: 'Address',
+                      dataIndex: 'address',
+                      key: 'address',
+                    },
+                  ],
+                  dataSource: [
+                    {
+                      key: '1',
+                      name: 'Mike',
+                      age: 32,
+                      address: '10 Downing Street',
+                    },
+                    {
+                      key: '2',
+                      name: 'John',
+                      age: 42,
+                      address: '10 Downing Street',
+                    }
+                  ]
+                },
+                ApiEndpoint: ''
+              }
+            }
+          ]
+        }
+      ]
+    }
 
   },
   action: Action
@@ -56,16 +247,16 @@ const Site = (
         ...newOBJ,
       };
       break;
-    /* case "SET_SECTION_AUTOCERTIFICAZIONI":
+    case "SET_CurrentPage":
       newOBJ = {
-        ...state.Section_Autocertificazioni,
+        ...state.CurrentPage,
         ...action.payload,
       };
       state = {
         ...state,
-        Section_Autocertificazioni: newOBJ,
+        CurrentPage: newOBJ,
       };
-      break; */
+      break;
 
 
   }
@@ -79,7 +270,8 @@ export default Site;
 
 interface State {
   Routes: any,
-  Pages: any
+  Pages: any,
+  CurrentPage: any
 }
 
 interface Action {

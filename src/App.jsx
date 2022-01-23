@@ -11,6 +11,7 @@ import ErrorPage from "./views/ErrorPage.jsx";
 
 /*    MANAGERS */
 /* COMPONENTS */
+import PageHeader_HOC from "./components/Shared/PageHeader_HOC";
 /* ANTD */
 import {
   BackTop,
@@ -95,39 +96,20 @@ class App extends Component {
               </Menu>
             </Header>
             <Content style={{ padding: "0 50px" }}>
-              <Anchor>
-                <PageHeader
-                  className="site-page-header-ghost-wrapper"
-                  ghost={false}
-                  onBack={null}
-                  title="Home Page"
-                  subTitle="Gestione della HomePage"
-                  extra={[
-                    <Button key="3" disabled>
-                      Operation 3
-                    </Button>,
-                    <Button key="2" disabled>
-                      Operation 2
-                    </Button>,
-                    <Button key="1" type="primary">
-                      Aggiungi Widget
-                    </Button>,
-                  ]}
-                />
-              </Anchor>
               <Breadcrumb style={{ margin: "16px 0" }}>
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
                 <Breadcrumb.Item>List</Breadcrumb.Item>
                 <Breadcrumb.Item>App</Breadcrumb.Item>
               </Breadcrumb>
-              <div className="site-layout-content">
+
+              <PageHeader_HOC>
                 <Switch>
                   {baseRoutes &&
                     baseRoutes.map((route) => {
                       return <Route {...route} />;
                     })}
                 </Switch>
-              </div>
+              </PageHeader_HOC>
             </Content>
             <Footer style={{ textAlign: "center" }}>
               Ant Design ©2018 Created by Ant UED
@@ -140,7 +122,11 @@ class App extends Component {
 }
 /* quale reducer vuoi utilizzare qui? solo math */
 const mapStateToProps = (state) => {
-  return { Session: state.SessionREDUCER, Router: state.router };
+  return {
+    Session: state.SessionREDUCER,
+    Router: state.router,
+    Site: state.SiteREDUCER,
+  };
 };
 const mapDispatchToProps = (dispatch) => {
   return {

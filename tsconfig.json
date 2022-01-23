@@ -6,9 +6,10 @@
         "preserveConstEnums": true,
         "outFile": "../../built/local/tsc.js",
         "sourceMap": true,
-        "allowJs": true
+        "allowJs": true,
+        "jsx": "preserve"
     },
-    "include": ["src/**/*", "src/components/HomePageComponents/Autocertificazioni.section.jsx"],
+    "include": ["src/**/*", "src/components/HomePageComponents/Autocertificazioni.section.jsx", "src/components/StepsForNewConfigurations/SummaryStep.jsx"],
     "exclude": ["node_modules", "**/*.spec.ts"],
     "lib": [
         "es2016",
