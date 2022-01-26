@@ -53,10 +53,12 @@ class APIConfigurator extends React.Component {
   onFinish = (values) => {
     let s = this.state;
     let p = this.props;
+    let { resultAPITesting } = s;
     let { currentStep } = p.Manager.Drawer_CreateNewComponent;
 
     p.SetAPIConfig_({
       ...values,
+      resultAPITesting,
     });
     this.onClickNext(currentStep);
   };

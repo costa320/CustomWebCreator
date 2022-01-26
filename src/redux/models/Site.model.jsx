@@ -132,3 +132,10 @@ export class SimpleField {
     this.type = fieldType;
   }
 }
+export class ApiEndpointConfig {
+  constructor(url = "", method = "get", headers = {}) {
+    this.method = method;
+    this.url = url;
+    this.headers = headers;
+  }
+}

@@ -42,68 +42,59 @@ class Table_Props extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      /* list of columns visualized inside select */
       listColumns: [],
-      allListColumns: [],
-      newColumnName: "",
+      columnName: "",
+      columnDataIndex: "",
+
+      ...this.props.Manager.ComponentConfig,
     };
   }
 
   onFinish = (values) => {
     let s = this.state;
     let p = this.props;
+    let { allListColumns } = s;
     let { currentStep } = p.Manager.Drawer_CreateNewComponent;
 
     p.SetComponentConfig_({
       ...values,
+      allListColumns,
     });
     this.onClickNext(currentStep);
   };
 
-  onFinishFailed = () => {};
-
-  onFieldsChange = (changedFields, allFields) => {
-    let p = this.props;
-    let temp_obj = {};
-    allFields.forEach((item) => {
-      temp_obj[item.name] = item.value;
-    });
-    this.setState({ ...temp_obj });
-    /* updating redux with new value but maintaining integrity with other values */
-    /*     p.SetComponentConfig_({
-      ...p.Manager.Drawer_CreateNewComponent,
-      ...temp_obj,
-    }); */
-    /*  let p = this.props;
-    const form = formRef.current;
-    console.log(changedFields);
-    form.setFieldsValue();
-    p.SetDrawerCreateNewComponent_({ loadingElenco: false }); */
-  };
-
   onAddColumn = () => {
     let s = this.state;
-    let { allListColumns, newColumnName } = s;
-    this.setState({
-      allListColumns: [...allListColumns, newColumnName],
-      newColumnName: "",
+    let p = this.props;
+    let { columnName, columnDataIndex } = s;
+    let { allListColumns } = p.Manager.ComponentConfig;
+
+    let newItem = { columnName, columnDataIndex };
+    let allListColumns_ = allListColumns || [];
+
+    /* update of allListColumns maintaining all previous data */
+    p.SetComponentConfig_({
+      allListColumns: [...allListColumns_, newItem],
     });
+    /* field reset */
+    this.setState({
+      columnName: "",
+      columnDataIndex: "",
+    });
+
     /* const form = formRef.current;
-    form.setFieldsValue({ listColumns: [...listColumns, newColumnName] }); */
+    form.setFieldsValue({ listColumns: [...listColumns, columnName] }); */
   };
 
   render() {
     let p = this.props;
     let s = this.state;
-    let { listColumns, allListColumns, newColumnName } = s;
+    let { columnName, columnDataIndex } = s;
     let { componentName, props } = p;
 
-    let { visible, dataSource, currentStep } =
-      this.props.Manager.Drawer_CreateNewComponent;
+    let { allListColumns } = this.props.Manager.ComponentConfig;
     let { rows } = p.Site.CurrentPage;
-
-    let modDataSource = {
-      ...dataSource,
-    };
 
     return (
       <>
@@ -116,39 +107,49 @@ class Table_Props extends React.Component {
           <Select
             placeholder="Seleziona le colonne della tabella"
             mode="multiple"
-            /* optionFilterProp={"label"} */
+            optionLabelProp="label"
             dropdownRender={(menu) => (
               <div>
                 {menu}
                 <Divider style={{ margin: "4px 0" }} />
-                <div
-                  style={{ display: "flex", flexWrap: "nowrap", padding: 8 }}
-                >
-                  <Input
-                    style={{ flex: "auto" }}
-                    value={newColumnName}
-                    onChange={(e) =>
-                      this.setState({ newColumnName: e.target.value })
-                    }
-                  />
-                  <a
-                    style={{
-                      flex: "none",
-                      padding: "8px",
-                      display: "block",
-                      cursor: "pointer",
-                    }}
-                    onClick={this.onAddColumn}
-                  >
-                    <PlusOutlined /> Add item
-                  </a>
-                </div>
+
+                <Row gutter={[24, 8]} style={{ padding: "12px" }}>
+                  <Col>
+                    <Input
+                      placeholder={"Column label"}
+                      value={columnName}
+                      onChange={(e) =>
+                        this.setState({ columnName: e.target.value })
+                      }
+                    />
+                  </Col>
+                  <Col>
+                    <Input
+                      placeholder={"Column dataIndex"}
+                      value={columnDataIndex}
+                      onChange={(e) =>
+                        this.setState({ columnDataIndex: e.target.value })
+                      }
+                    />
+                  </Col>
+                  <Col>
+                    <Button icon={<PlusOutlined />} onClick={this.onAddColumn}>
+                      Add item
+                    </Button>
+                  </Col>
+                </Row>
               </div>
             )}
           >
             {allListColumns &&
-              allListColumns.map((item) => (
-                <Select.Option key={item}>{item}</Select.Option>
+              allListColumns.map(({ columnDataIndex, columnName }) => (
+                <Select.Option
+                  key={columnDataIndex}
+                  value={columnDataIndex}
+                  label={columnName}
+                >
+                  {`${columnName} | ${columnDataIndex}`}
+                </Select.Option>
               ))}
           </Select>
         </Form.Item>

@@ -224,7 +224,11 @@ const Site = (
                     }
                   ]
                 },
-                ApiEndpoint: ''
+                ApiEndpointConfig: {
+                  method: "get", //  get, post, put...
+                  url: '', //  url
+                  headers: {},
+                }
               }
             }
           ]

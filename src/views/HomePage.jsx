@@ -67,7 +67,7 @@ class HomePage extends Component {
               >
                 <ErrorBoundary>
                   {component ? (
-                    DynamicComponent(component.name, component.props)
+                    DynamicComponent(component)
                   ) : (
                     <Empty
                       image={Empty.PRESENTED_IMAGE_SIMPLE}

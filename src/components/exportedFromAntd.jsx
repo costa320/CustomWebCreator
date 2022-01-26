@@ -2,6 +2,8 @@ import React, { Component } from "react";
 /* ANTD */
 import * as antd from "antd";
 import * as antdIcons from "@ant-design/icons";
+/* Layers */
+import ApiLayerWrapper from "./ApiLayerWrapper";
 /* MODELS */
 import {
   ArrayField,
@@ -42,12 +44,16 @@ const WhiteListComponents = {
 
 /* GET COMPONENT */
 /* imported Antd Components */
-export function DynamicComponent(name, props) {
+export function DynamicComponent({ name, props, ApiEndpointConfig }) {
   /* controll if the component was enabled/in whitelist */
   if (process.env.COMPONENTS_FILTERS === "enabled") {
     if (WhiteListComponents[name]) {
       const TheComponent = IComponents[name];
-      return <TheComponent {...props} />;
+      return (
+        <ApiLayerWrapper config={ApiEndpointConfig}>
+          <TheComponent {...props} />
+        </ApiLayerWrapper>
+      );
     } else {
       return "component non è stato censito";
     }
@@ -77,21 +83,4 @@ export function DynamicIcon(name, props) {
 /* GET ICONS LIST */
 export function IconsList() {
   return IIcons;
-}
-
-class DynamicPropsComponent {
-  constructor() {
-    /*  row_id,
-    hgutters = 8,
-    vgutters = 16,
-    justify = "start",
-    align = null */
-    // Constructor
-    /*   this.row_id = row_id;
-    this.hgutters = hgutters;
-    this.vgutters = vgutters;
-    this.justify = justify;
-    this.align = align;
-    this.cols = cols; */
-  }
 }

@@ -30,16 +30,21 @@ import {
   _Component,
   _hgutters,
   _vgutters,
+  ApiEndpointConfig,
 } from "../../redux/models/Site.model";
 /* HELPERS */
 import { UUID } from "../../assets/extra/extra";
+import { PropsGeneration } from "../PropsForComponents/props.generation";
+
 /* STYLES */
 
 const formRef = React.createRef();
 class SummaryStep extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      ...this.props.Manager.Summary,
+    };
   }
 
   onFinish = (values) => {
@@ -59,6 +64,12 @@ class SummaryStep extends React.Component {
   onFinishFailed = () => {};
 
   onFieldsChange = (changedFields, allFields) => {
+    let p = this.props;
+    let temp_obj = {};
+    allFields.forEach((item) => {
+      temp_obj[item.name] = item.value;
+    });
+    this.setState({ ...temp_obj });
     /*  let p = this.props;
     const form = formRef.current;
     console.log(changedFields);
@@ -79,8 +90,9 @@ class SummaryStep extends React.Component {
   updateCurrentPageStructure = () => {
     let p = this.props;
     let { RowConfig, ComponentConfig, APIConfig, Summary } = p.Manager;
-    /* ComponentConfig.componentName  RowConfig.row_id  */
     const currentRows = p.Site.CurrentPage.rows;
+
+    /* Finding indexes */
     let i_row = currentRows.findIndex(
       ({ row_id }) => row_id === RowConfig.row_id
     );
@@ -88,10 +100,21 @@ class SummaryStep extends React.Component {
       ({ col_id }) => col_id === RowConfig.col_id
     );
 
+    /* creating new component */
     let tempRows = [...p.Site.CurrentPage.rows];
+
     tempRows[i_row].cols[i_col].component = {
       name: ComponentConfig.componentName,
-      props: {},
+      props: PropsGeneration(
+        ComponentConfig.componentName,
+        RowConfig,
+        ComponentConfig,
+        APIConfig,
+        Summary
+      ),
+      ApiEndpointConfig: new ApiEndpointConfig(
+        APIConfig.apiUrlForDataSource
+      ),
     };
 
     p.SET_CurrentPage_({ rows: tempRows });
@@ -100,12 +123,12 @@ class SummaryStep extends React.Component {
   render() {
     let p = this.props;
     let s = this.state;
-    let { visible, dataSource, currentStep } =
-      this.props.Manager.Drawer_CreateNewComponent;
+    let { RowConfig, ComponentConfig, APIConfig, Summary } = this.props.Manager;
+
     let { rows } = p.Site.CurrentPage;
 
     let modDataSource = {
-      ...dataSource,
+      ...Summary,
     };
 
     return (
