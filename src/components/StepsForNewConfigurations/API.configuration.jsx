@@ -7,6 +7,9 @@ import {
   SetDrawerCreateNewComponent,
   SetAPIConfig,
 } from "../../redux/actions/Manager.actions";
+/* AXIOS */
+import axios from "axios";
+import { getAxiosFull } from "../../axios/axios.general.ts";
 /* ANTD */
 import {
   Row,
@@ -32,6 +35,7 @@ import {
   _vgutters,
 } from "../../redux/models/Site.model";
 /* HELPERS */
+import ReactJson from "react-json-view";
 import { UUID } from "../../assets/extra/extra";
 /* STYLES */
 
@@ -39,7 +43,11 @@ const formRef = React.createRef();
 class APIConfigurator extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      testingAPI: false,
+      resultAPITesting: null,
+      ...this.props.Manager.APIConfig,
+    };
   }
 
   onFinish = (values) => {
@@ -56,6 +64,12 @@ class APIConfigurator extends React.Component {
   onFinishFailed = () => {};
 
   onFieldsChange = (changedFields, allFields) => {
+    let p = this.props;
+    let temp_obj = {};
+    allFields.forEach((item) => {
+      temp_obj[item.name] = item.value;
+    });
+    this.setState({ ...temp_obj });
     /*  let p = this.props;
     const form = formRef.current;
     console.log(changedFields);
@@ -71,21 +85,30 @@ class APIConfigurator extends React.Component {
     });
   };
 
-  onClose = () => {
-    /* const form = formRef.current;
-    form.resetFields(); */
-    this.props.SetDrawerCreateNewComponent_({
-      dataSource: {},
-      visible: false,
-      currentStep: 0,
-    });
+  testApiCall = () => {
+    let self = this;
+    let { apiUrlForDataSource } = this.state;
+    this.setState({ testingAPI: true, resultAPITesting: null });
+    let config = {
+      method: "get", //  get, post, put...
+      url: apiUrlForDataSource, //  url
+      headers: {},
+    };
+    getAxiosFull(config)
+      .then((req) => {
+        self.setState({ testingAPI: false, resultAPITesting: req });
+      })
+      .catch((error) => {
+        console.log(error);
+        self.setState({ testingAPI: false, resultAPITesting: error });
+      });
   };
 
   render() {
     let p = this.props;
     let s = this.state;
-    let { visible, dataSource, currentStep } =
-      this.props.Manager.Drawer_CreateNewComponent;
+    let { apiUrlForDataSource, testingAPI, resultAPITesting } = s;
+    let dataSource = p.Manager.APIConfig;
     let { rows } = p.Site.CurrentPage;
 
     let modDataSource = {
@@ -103,23 +126,51 @@ class APIConfigurator extends React.Component {
         onFieldsChange={this.onFieldsChange}
         autoComplete="off"
       >
-        {/*  <Form.Item
-          name="componentsName"
-          label="Seleziona il componente"
-          tooltip="Seleziona il componente che vorresti integrare."
-          rules={[{ required: true, message: "Please select gender!" }]}
-        >
-          <Select placeholder="Seleziona il componente">
-            {AntdComponentList &&
-              Object.entries(AntdComponentList).map(([key, value]) => {
-                return (
-                  <Select.Option key={UUID()} value={key}>
-                    {key}
-                  </Select.Option>
-                );
-              })}
-          </Select>
-        </Form.Item> */}
+        <Row gutter={[16, 16]} align="bottom">
+          <Col flex="auto">
+            <Form.Item
+              name="apiUrlForDataSource"
+              label="Inserire l'API"
+              tooltip="Inserire l'url dal quale reperire i dati per alimentare il componente. Si possono anche utilizzare le variabili d'ambiente locali"
+              rules={[{ required: true, message: "Please select API!" }]}
+            >
+              <Input />
+            </Form.Item>
+          </Col>
+          <Col flex="100px">
+            <Form.Item>
+              <Button
+                style={{ width: "100%" }}
+                type="dashed"
+                onClick={this.testApiCall}
+                loading={testingAPI}
+                disabled={!apiUrlForDataSource}
+              >
+                Test API
+              </Button>
+            </Form.Item>
+          </Col>
+        </Row>
+
+        {resultAPITesting && (
+          <>
+            <Divider />
+            {resultAPITesting.data ? (
+              <ReactJson
+                src={resultAPITesting.data}
+                name={null}
+                collapsed={2}
+              />
+            ) : (
+              <ReactJson
+                src={resultAPITesting.toJSON()}
+                name={null}
+                collapsed={1}
+              />
+            )}
+            <Divider />
+          </>
+        )}
 
         <Row justify="end">
           <Col>

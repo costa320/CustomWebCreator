@@ -20,4 +20,27 @@ var router = express.Router();
 //   }
 // );
 
+const testResponse = [
+  {
+    key: "1",
+    name: "Mike",
+    age: 32,
+    address: "10 Downing Street",
+  },
+  {
+    key: "2",
+    name: "John",
+    age: 42,
+    address: "10 Downing Street",
+  },
+];
+
+router.get("/test-api-table", function (req, res, next) {
+  /* tutto quello che sta sul path /users non è di react */
+  /*   res.header("Pragma", "no-cache");
+  res.header("Expires", -1);
+  res.header('Cache-Control', "private, no-cache, no-store, must-revalidate"); */
+  res.status(200).send(testResponse);
+});
+
 module.exports = router;

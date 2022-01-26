@@ -34,6 +34,8 @@ import {
 } from "../../redux/models/Site.model";
 /* HELPERS */
 import { UUID } from "../../assets/extra/extra";
+/* PROPS COMPONENTS */
+import { DynamicPropsComponent } from "../PropsForComponents/index.export";
 /* STYLES */
 
 const formRef = React.createRef();
@@ -42,6 +44,7 @@ class ComponentConfigurator extends React.Component {
     super(props);
     this.state = {
       AntdComponentList: ComponentsList(),
+      ...this.props.Manager.ComponentConfig,
     };
   }
 
@@ -59,32 +62,23 @@ class ComponentConfigurator extends React.Component {
   onFinishFailed = () => {};
 
   onFieldsChange = (changedFields, allFields) => {
+    let p = this.props;
+    let temp_obj = {};
+    allFields.forEach((item) => {
+      temp_obj[item.name] = item.value;
+    });
+    this.setState({ ...temp_obj });
+    /* updating redux with new value but maintaining integrity with other values */
+    /*     p.SetComponentConfig_({
+      ...p.Manager.Drawer_CreateNewComponent,
+      ...temp_obj,
+    }); */
+
     /*  let p = this.props;
     const form = formRef.current;
     console.log(changedFields);
     form.setFieldsValue();
     p.SetDrawerCreateNewComponent_({ loadingElenco: false }); */
-  };
-
-
-  onClose = () => {
-    /* const form = formRef.current;
-    form.resetFields(); */
-    this.props.SetDrawerCreateNewComponent_({
-      dataSource: {},
-      visible: false,
-      currentStep: 0,
-    });
-  };
-
-  onAddRow = () => {
-    let p = this.props;
-    const currentRows = p.Site.CurrentPage.rows;
-    const tempRows = [...currentRows, new _Row(currentRows.length++)];
-    p.SET_CurrentPage_({ rows: tempRows });
-    p.SetDrawerCreateNewComponent_({
-      dataSource: tempRows[tempRows.length - 1],
-    });
   };
 
   onClickNext = (currentStep, formRef) => {
@@ -95,12 +89,19 @@ class ComponentConfigurator extends React.Component {
     });
   };
 
+  generatePropsFields = (componentName) => {
+    let s = this.state;
+    let { AntdComponentList } = s;
+    let { props } = AntdComponentList[componentName];
+    console.log(props);
+  };
+
   render() {
     let p = this.props;
     let s = this.state;
-    let { AntdComponentList } = s;
-    let { visible, dataSource, currentStep } =
-      this.props.Manager.Drawer_CreateNewComponent;
+    let { AntdComponentList, componentName } = s;
+
+    let dataSource = p.Manager.ComponentConfig;
     let { rows } = p.Site.CurrentPage;
 
     let modDataSource = {
@@ -108,48 +109,54 @@ class ComponentConfigurator extends React.Component {
     };
 
     return (
-      <Form
-        ref={formRef}
-        name="basic"
-        layout={"vertical"}
-        initialValues={modDataSource}
-        onFinish={this.onFinish}
-        onFinishFailed={this.onFinishFailed}
-        onFieldsChange={this.onFieldsChange}
-        autoComplete="off"
-      >
-        <Form.Item
-          name="componentName"
-          label="Seleziona il componente"
-          tooltip="Seleziona il componente che vorresti integrare."
-          rules={[{ required: true, message: "Please select gender!" }]}
+      <>
+        <Form
+          ref={formRef}
+          name="basic"
+          layout={"vertical"}
+          initialValues={modDataSource}
+          onFinish={this.onFinish}
+          onFinishFailed={this.onFinishFailed}
+          onFieldsChange={this.onFieldsChange}
+          autoComplete="off"
         >
-          <Select
-            placeholder="Seleziona il componente"
-            showSearch={true}
-            /* optionFilterProp={"label"} */
+          <Form.Item
+            name="componentName"
+            label="Seleziona il componente"
+            tooltip="Seleziona il componente che vorresti integrare."
+            rules={[{ required: true, message: "Please select gender!" }]}
           >
-            {AntdComponentList &&
-              Object.entries(AntdComponentList).map(([key, value]) => {
-                return (
-                  <Select.Option key={UUID()} value={key}>
-                    {key}
-                  </Select.Option>
-                );
-              })}
-          </Select>
-        </Form.Item>
-
-        <Row justify="end">
-          <Col>
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Passaggio successivo
-              </Button>
-            </Form.Item>
-          </Col>
-        </Row>
-      </Form>
+            <Select
+              placeholder="Seleziona il componente"
+              showSearch={true}
+              /* optionFilterProp={"label"} */
+            >
+              {AntdComponentList &&
+                Object.entries(AntdComponentList).map(([key, value]) => {
+                  return (
+                    <Select.Option key={UUID()} value={key}>
+                      {key}
+                    </Select.Option>
+                  );
+                })}
+            </Select>
+          </Form.Item>
+          {componentName &&
+            DynamicPropsComponent(
+              componentName,
+              AntdComponentList[componentName]
+            )}
+          <Row justify="end">
+            <Col>
+              <Form.Item>
+                <Button type="primary" htmlType="submit">
+                  Passaggio successivo
+                </Button>
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form>
+      </>
     );
   }
 }

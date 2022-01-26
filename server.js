@@ -16,7 +16,7 @@ app.use(logger(process.env.MORGANLEVEL));
 app.use(express.static(path.resolve(__dirname, "./build")));
 
 /* GESTIONE ROUTING REACT E VARI REFRESH RICHIESTI DAL BROWSER */
-router.get("*", function (req, res, next) {
+router.get("/", function (req, res, next) {
   var i = path.resolve(__dirname, "./build/index.html");
   res.sendFile(i, function (err) {
     if (err) {

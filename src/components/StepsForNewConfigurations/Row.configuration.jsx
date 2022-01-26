@@ -40,7 +40,7 @@ class RowConfigurator extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ...this.props.Manager.Drawer_CreateNewComponent.dataSource,
+      ...this.props.Manager.RowConfig,
     };
   }
 
@@ -59,7 +59,7 @@ class RowConfigurator extends React.Component {
 
   onFieldsChange = (changedFields, allFields) => {
     let temp_obj = {};
-    changedFields.forEach((item) => {
+    allFields.forEach((item) => {
       temp_obj[item.name] = item.value;
     });
     this.setState({ ...temp_obj });
@@ -102,8 +102,7 @@ class RowConfigurator extends React.Component {
     let p = this.props;
     let s = this.state;
     let { row_id } = s;
-    let { visible, dataSource, currentStep } =
-      p.Manager.Drawer_CreateNewComponent;
+    let dataSource = p.Manager.RowConfig;
     let { rows } = p.Site.CurrentPage;
 
     let modDataSource = {

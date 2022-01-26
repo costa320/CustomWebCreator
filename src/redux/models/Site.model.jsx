@@ -98,3 +98,37 @@ export class _Component {
     this.ApiEndpoint = ApiEndpoint;
   }
 }
+
+export class ArrayField {
+  /* properties */
+  constructor(typeOfElementInside, properties) {
+    this.type = "array";
+    this.items = this.generateItems(typeOfElementInside, properties);
+  }
+  generateItems(typeOfElementInside, properties) {
+    if (typeOfElementInside === "object") return new ObjectField(properties);
+    else return new SimpleField(typeOfElementInside);
+  }
+}
+
+export class ObjectField {
+  /* properties */
+  constructor(properties = {}) {
+    this.type = "object";
+    this.properties = this.generateProperties(properties);
+  }
+  generateProperties(properties) {
+    let newObj = {};
+    Object.keys(properties).forEach((key) => {
+      let value = properties[key];
+      newObj[key] = new SimpleField(typeof value);
+    });
+    return newObj;
+  }
+}
+
+export class SimpleField {
+  constructor(fieldType = "string" | "number" | "boolean") {
+    this.type = fieldType;
+  }
+}

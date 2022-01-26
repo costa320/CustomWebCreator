@@ -58,6 +58,14 @@ class DrawerCreateNewRow extends React.Component {
     });
   };
 
+  onBack = () => {
+    let p = this.props;
+    let { currentStep } = p.Manager.Drawer_CreateNewComponent;
+    this.props.SetDrawerCreateNewComponent_({
+      currentStep: currentStep - 1,
+    });
+  };
+
   onAddRow = () => {
     let p = this.props;
     const currentRows = p.Site.CurrentPage.rows;
@@ -136,10 +144,14 @@ class DrawerCreateNewRow extends React.Component {
           bodyStyle={{ paddingBottom: 80 }}
           extra={
             <Space>
+              <Button
+                disabled={currentStep === 0}
+                onClick={this.onBack}
+                type="primary"
+              >
+                Indietro
+              </Button>
               <Button onClick={this.onClose}>Annulla</Button>
-              {/*  <Button onClick={this.onClose} type="primary">
-                Passaggio Successivo
-              </Button> */}
             </Space>
           }
         >
