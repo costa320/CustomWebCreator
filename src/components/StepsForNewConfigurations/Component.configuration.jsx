@@ -69,10 +69,9 @@ class ComponentConfigurator extends React.Component {
     });
     this.setState({ ...temp_obj });
     /* updating redux with new value but maintaining integrity with other values */
-    /*     p.SetComponentConfig_({
-      ...p.Manager.Drawer_CreateNewComponent,
+    p.SetComponentConfig_({
       ...temp_obj,
-    }); */
+    });
 
     /*  let p = this.props;
     const form = formRef.current;
