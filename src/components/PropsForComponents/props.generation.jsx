@@ -24,6 +24,8 @@ export function TablePropsGeneration(
 ) {
   /* all columnsCreated=> allListColumns ; columns selected by user =>listColumns */
   let { allListColumns, listColumns } = ComponentConfig;
+  let { apiDynamicData, staticData } = APIConfig;
+
   let columns = listColumns.map((columnDataIndex) => {
     return {
       key: columnDataIndex,
@@ -33,7 +35,7 @@ export function TablePropsGeneration(
       ).columnName,
     };
   });
-  let dataSource = [];
+  let dataSource = apiDynamicData ? [] : staticData;
 
   return { columns, dataSource };
 }

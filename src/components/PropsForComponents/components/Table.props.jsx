@@ -101,7 +101,7 @@ class Table_Props extends React.Component {
         <Form.Item
           name="listColumns"
           label="Seleziona le colonne della tabella"
-          tooltip="Seleziona le colonne della tabella, oppure puoi inserire nuove colonne."
+          tooltip="Seleziona le colonne della tabella, oppure puoi inserire nuove colonne. dataIndex rappresenta il nome della property dentro l'oggetto, a cui è associata la colonna."
           rules={[{ required: true, message: "Please select cols!" }]}
         >
           <Select
@@ -133,8 +133,12 @@ class Table_Props extends React.Component {
                     />
                   </Col>
                   <Col>
-                    <Button icon={<PlusOutlined />} onClick={this.onAddColumn}>
-                      Add item
+                    <Button
+                      disabled={columnName && columnDataIndex ? false : true}
+                      icon={<PlusOutlined />}
+                      onClick={this.onAddColumn}
+                    >
+                      Aggiungi colonna alla selezione
                     </Button>
                   </Col>
                 </Row>

@@ -22,24 +22,8 @@ const IIcons = {
 
 /* whiteListed components */
 const WhiteListComponents = {
-  Table: {
-    props: {
-      dataSource: new ArrayField("object", {
-        key: 1,
-        name: "Mike",
-        age: 32,
-        human: true,
-      }),
-      columns: new ArrayField("object", {
-        title: "Name",
-        dataIndex: "name",
-        key: "name",
-      }),
-    },
-  },
-  Divider: {
-    props: {},
-  },
+  Table: {},
+  Divider: {},
 };
 
 /* GET COMPONENT */

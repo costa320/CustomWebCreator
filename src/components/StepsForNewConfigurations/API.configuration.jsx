@@ -24,6 +24,7 @@ import {
   Checkbox,
   Slider,
   Steps,
+  Switch,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 /* MODELS Constructor */
@@ -46,6 +47,7 @@ class APIConfigurator extends React.Component {
     this.state = {
       testingAPI: false,
       resultAPITesting: null,
+      staticData: [],
       ...this.props.Manager.APIConfig,
     };
   }
@@ -53,12 +55,13 @@ class APIConfigurator extends React.Component {
   onFinish = (values) => {
     let s = this.state;
     let p = this.props;
-    let { resultAPITesting } = s;
+    let { resultAPITesting, staticData } = s;
     let { currentStep } = p.Manager.Drawer_CreateNewComponent;
 
     p.SetAPIConfig_({
       ...values,
       resultAPITesting,
+      staticData,
     });
     this.onClickNext(currentStep);
   };
@@ -106,15 +109,32 @@ class APIConfigurator extends React.Component {
       });
   };
 
+  onEditStaticJson = (edit_) => {
+    this.setState({ staticData: edit_.updated_src });
+  };
+  onAddStaticJson = (add_) => {
+    this.setState({ staticData: add_.updated_src });
+  };
+  onDeleteStaticJson = (delete_) => {
+    this.setState({ staticData: delete_.updated_src });
+  };
+
   render() {
     let p = this.props;
     let s = this.state;
-    let { apiUrlForDataSource, testingAPI, resultAPITesting } = s;
+    let {
+      apiUrlForDataSource,
+      apiDynamicData,
+      staticData,
+      testingAPI,
+      resultAPITesting,
+    } = s;
     let dataSource = p.Manager.APIConfig;
     let { rows } = p.Site.CurrentPage;
 
     let modDataSource = {
       ...dataSource,
+      apiDynamicData: false,
     };
 
     return (
@@ -128,49 +148,79 @@ class APIConfigurator extends React.Component {
         onFieldsChange={this.onFieldsChange}
         autoComplete="off"
       >
-        <Row gutter={[16, 16]} align="bottom">
-          <Col flex="auto">
-            <Form.Item
-              name="apiUrlForDataSource"
-              label="Inserire l'API"
-              tooltip="Inserire l'url dal quale reperire i dati per alimentare il componente. Si possono anche utilizzare le variabili d'ambiente locali"
-              rules={[{ required: true, message: "Please select API!" }]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col flex="100px">
-            <Form.Item>
-              <Button
-                style={{ width: "100%" }}
-                type="dashed"
-                onClick={this.testApiCall}
-                loading={testingAPI}
-                disabled={!apiUrlForDataSource}
-              >
-                Test API
-              </Button>
-            </Form.Item>
-          </Col>
-        </Row>
+        <Form.Item
+          name="apiDynamicData"
+          label="Processo di alimentazione"
+          tooltip="Se i dati che alimenteranno il component precedentemente scelto sono statici o dinamici."
+          valuePropName="checked"
+        >
+          <Switch
+            checkedChildren={"Dati dinamici"}
+            unCheckedChildren={"Dati statici"}
+          />
+        </Form.Item>
 
-        {resultAPITesting && (
+        {/* when api is enabled... */}
+        {apiDynamicData && (
           <>
-            <Divider />
-            {resultAPITesting.data ? (
-              <ReactJson
-                src={resultAPITesting.data}
-                name={null}
-                collapsed={2}
-              />
-            ) : (
-              <ReactJson
-                src={resultAPITesting.toJSON()}
-                name={null}
-                collapsed={1}
-              />
+            <Row gutter={[16, 16]} align="bottom">
+              <Col flex="auto">
+                <Form.Item
+                  name="apiUrlForDataSource"
+                  label="Inserire l'API"
+                  tooltip="Inserire l'url dal quale reperire i dati per alimentare il componente. Si possono anche utilizzare le variabili d'ambiente locali"
+                  rules={[{ required: true, message: "Please select API!" }]}
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
+              <Col flex="100px">
+                <Form.Item>
+                  <Button
+                    style={{ width: "100%" }}
+                    type="dashed"
+                    onClick={this.testApiCall}
+                    loading={testingAPI}
+                    disabled={!apiUrlForDataSource}
+                  >
+                    Test API
+                  </Button>
+                </Form.Item>
+              </Col>
+            </Row>
+
+            {resultAPITesting && (
+              <>
+                <Divider />
+                {resultAPITesting.data ? (
+                  <ReactJson
+                    src={resultAPITesting.data}
+                    name={null}
+                    collapsed={2}
+                  />
+                ) : (
+                  <ReactJson
+                    src={resultAPITesting.toJSON()}
+                    name={null}
+                    collapsed={1}
+                  />
+                )}
+                <Divider />
+              </>
             )}
-            <Divider />
+          </>
+        )}
+        {/* when static data is enabled */}
+        {!apiDynamicData && (
+          <>
+            <ReactJson
+              src={staticData}
+              onEdit={this.onEditStaticJson}
+              onAdd={this.onAddStaticJson}
+              onDelete={this.onDeleteStaticJson}
+              name={null}
+              collapsed={2}
+            />
           </>
         )}
 

@@ -112,9 +112,8 @@ class SummaryStep extends React.Component {
         APIConfig,
         Summary
       ),
-      ApiEndpointConfig: new ApiEndpointConfig(
-        APIConfig.apiUrlForDataSource
-      ),
+      fullConfiguration: p.Manager,
+      ApiEndpointConfig: new ApiEndpointConfig(APIConfig.apiUrlForDataSource),
     };
 
     p.SET_CurrentPage_({ rows: tempRows });
