@@ -24,6 +24,13 @@ const IIcons = {
 const WhiteListComponents = {
   Table: {},
   Divider: {},
+  Rate: {},
+  Slider: {},
+  Switch: {},
+  Calendar: {},
+  Empty: {},
+  Spin: {},
+  BackTop: {},
 };
 
 /* GET COMPONENT */
