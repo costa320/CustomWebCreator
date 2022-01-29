@@ -115,7 +115,7 @@ class DrawerCreateNewRow extends React.Component {
         stepId: 2,
         title: "Configurazione delle API.",
         description:
-          "Configurazione degli end-point/dati-static da cui il componente prenderà i dati.",
+          "Configurazione degli end-point/dati-static da cui il componente sarà alimentato.",
         status: null,
         component: APIConfiguration,
       },
@@ -137,7 +137,7 @@ class DrawerCreateNewRow extends React.Component {
     return (
       <>
         <Drawer
-          title="Configuratore della riga"
+          title="Configuratore"
           width={"80%"}
           onClose={this.onClose}
           visible={visible}

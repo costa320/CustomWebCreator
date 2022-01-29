@@ -24,6 +24,7 @@ import {
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { ComponentsList } from "../exportedFromAntd";
+import ComponentSelection from "../ComponentSelection";
 /* MODELS Constructor */
 import {
   _Row,
@@ -109,6 +110,8 @@ class ComponentConfigurator extends React.Component {
 
     return (
       <>
+        {/* <ComponentSelection />
+        <Divider /> */}
         <Form
           ref={formRef}
           name="basic"
