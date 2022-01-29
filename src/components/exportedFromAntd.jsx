@@ -20,47 +20,48 @@ const IIcons = {
   ...antdIcons,
 };
 
-/* whiteListed components */
-const WhiteListComponents = {
-  Table: {},
-  Divider: {},
-  Rate: {},
-  Slider: {},
+const FormListComponents = {
+  Input: {},
+  InputNumber: {},
+  Checkbox: {},
   Switch: {},
-  Calendar: {},
-  Empty: {},
-  Spin: {},
-  BackTop: {},
+  Radio: {},
 };
 
 /* GET COMPONENT */
 /* imported Antd Components */
 export function DynamicComponent({ name, props, ApiEndpointConfig }) {
-  /* controll if the component was enabled/in whitelist */
-  if (process.env.COMPONENTS_FILTERS === "enabled") {
-    if (WhiteListComponents[name]) {
-      const TheComponent = IComponents[name];
-      return (
-        <ApiLayerWrapper config={ApiEndpointConfig}>
-          <TheComponent {...props} />
-        </ApiLayerWrapper>
-      );
-    } else {
-      return "component non è stato censito";
-    }
+  if (IComponents[name]) {
+    const TheComponent = IComponents[name];
+    return (
+      <ApiLayerWrapper config={ApiEndpointConfig}>
+        <TheComponent {...props} />
+      </ApiLayerWrapper>
+    );
   } else {
-    return "component non è abilitato";
+    return "component non esiste";
+  }
+}
+
+/* just for visual purpose only */
+export function PreviewDynamicComponent(name) {
+  /* controll if the component was enabled/in whitelist */
+  if (IComponents[name]) {
+    const TheComponent = IComponents[name];
+    return <TheComponent />;
+  } else {
+    return "component non esiste";
   }
 }
 
 /* GET COMPONENTS LIST */
 export function ComponentsList() {
-  if (process.env.COMPONENTS_FILTERS === "enabled") {
-    /* all components are returned... */
-    return WhiteListComponents;
-  } else {
-    return IComponents;
-  }
+  return IComponents;
+}
+
+/* GET FORM COMPONENTS LIST */
+export function FormComponentsList() {
+  return FormListComponents;
 }
 
 /* GET ICON */
