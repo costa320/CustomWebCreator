@@ -89,7 +89,13 @@ class SummaryStep extends React.Component {
 
   updateCurrentPageStructure = () => {
     let p = this.props;
-    let { RowConfig, ComponentConfig, APIConfig, Summary } = p.Manager;
+    let {
+      RowConfig,
+      ComponentConfig,
+      ComponentCustomization,
+      APIConfig,
+      Summary,
+    } = p.Manager;
     const currentRows = p.Site.CurrentPage.rows;
 
     /* Finding indexes */
@@ -109,6 +115,7 @@ class SummaryStep extends React.Component {
         ComponentConfig.componentName,
         RowConfig,
         ComponentConfig,
+        ComponentCustomization,
         APIConfig,
         Summary
       ),

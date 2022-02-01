@@ -10,7 +10,6 @@ import { getAxiosFull } from "../axios/axios.general";
 import {
   Row,
   Col,
-  Tabs,
   Drawer,
   Button,
   Space,
@@ -23,8 +22,11 @@ import {
   Steps,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { ComponentsList } from "./exportedFromAntd";
-
+/* STEPS CONFIGURATION */
+import APIConfiguration from "./StepsForNewConfigurations/API.configuration";
+import RowConfiguration from "./StepsForNewConfigurations/Row.configuration";
+import ComponentConfiguration from "./StepsForNewConfigurations/Component.customization";
+import SummaryConfiguration from "./StepsForNewConfigurations/SummaryStep";
 /* MODELS Constructor */
 import {
   _Row,
@@ -39,48 +41,46 @@ import SummaryStep from "./StepsForNewConfigurations/SummaryStep";
 /* STYLES */
 
 const formRef = React.createRef();
-class ComponentSelection extends React.Component {
+class PropsLayerWrapper extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      loading: false,
-      data: null,
-      AntdComponentList: ComponentsList(),
-    };
+    this.state = {};
   }
+
+  componentDidMount() {
+    let p = this.props;
+  }
+
+  injectPropsIntoChildren(children, additionalProps) {
+    return React.Children.map(children, (child) => {
+      // Checking isValidElement is the safe way and avoids a typescript
+      // error too.
+      if (React.isValidElement(child)) {
+        /* injecting some props to cloned children */
+        return React.cloneElement(child, {
+          ...child.props,
+          /* additional props here */
+          ...additionalProps,
+        });
+      }
+      return child;
+    });
+  }
+
+  getCustomProps = (child) => {
+    let p = this.props;
+    let { name, props, ApiEndpointConfig, fullConfiguration } = p.component;
+    
+  };
 
   render() {
     let p = this.props;
     let s = this.state;
-    let { config } = p;
-    let { data, loading } = s;
 
-    return (
-      <>
-       
-      </>
-      // <Form.Item
-      //   name="componentName"
-      //   label="Seleziona il componente dalla lista"
-      //   tooltip="Seleziona il componente che vorresti integrare."
-      //   rules={[{ required: true, message: "Please select gender!" }]}
-      // >
-      //   <Select
-      //     placeholder="Seleziona il componente"
-      //     showSearch={true}
-      //     /* optionFilterProp={"label"} */
-      //   >
-      //     {AntdComponentList &&
-      //       Object.entries(AntdComponentList).map(([key, value]) => {
-      //         return (
-      //           <Select.Option key={UUID()} value={key}>
-      //             {key}
-      //           </Select.Option>
-      //         );
-      //       })}
-      //   </Select>
-      // </Form.Item>
-    );
+    let { name, props, ApiEndpointConfig, fullConfiguration } = p.component;
+    let { dataSource, loading } = p;
+
+    return this.injectPropsIntoChildren(p.children, props);
   }
 }
 /* quale reducer vuoi utilizzare qui? solo math */
@@ -105,4 +105,4 @@ const mapDispatchToProps = (dispatch) => {
     },
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(ComponentSelection);
+export default connect(mapStateToProps, mapDispatchToProps)(PropsLayerWrapper);

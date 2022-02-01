@@ -24,7 +24,6 @@ import {
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { ComponentsList } from "../exportedFromAntd";
-import ComponentSelection from "../ComponentSelection";
 /* MODELS Constructor */
 import {
   _Row,
@@ -143,11 +142,7 @@ class ComponentConfigurator extends React.Component {
                 })}
             </Select>
           </Form.Item>
-          {componentName &&
-            DynamicPropsComponent(
-              componentName,
-              AntdComponentList[componentName]
-            )}
+
           <Row justify="end">
             <Col>
               <Form.Item>

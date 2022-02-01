@@ -109,9 +109,8 @@ class RowConfigurator extends React.Component {
       ...dataSource,
     };
 
-    let cols = s.row_id
-      ? rows.find(({ row_id }) => row_id === s.row_id).cols
-      : [];
+    let cols =
+      s.row_id >= 0 ? rows.find(({ row_id }) => row_id === s.row_id).cols : [];
 
     return (
       <Form

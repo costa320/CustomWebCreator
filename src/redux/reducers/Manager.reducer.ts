@@ -16,6 +16,9 @@ const Manager = (
     ComponentConfig: {
 
     },
+    ComponentCustomization: {
+
+    },
     APIConfig: {
 
     },
@@ -66,6 +69,16 @@ const Manager = (
         ComponentConfig: newOBJ,
       };
       break;
+    case "SET_ComponentCustomization":
+      newOBJ = {
+        ...state.ComponentCustomization,
+        ...action.payload,
+      };
+      state = {
+        ...state,
+        ComponentCustomization: newOBJ,
+      };
+      break;
     case "SET_APIConfig":
       newOBJ = {
         ...state.APIConfig,
@@ -99,6 +112,7 @@ interface State {
   Drawer_CreateNewComponent: any,
   RowConfig: any,
   ComponentConfig: any,
+  ComponentCustomization: any,
   APIConfig: any,
   Summary: any,
 }

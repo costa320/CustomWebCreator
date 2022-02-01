@@ -17,15 +17,22 @@ import {
   Space,
   Form,
   Input,
+  Badge,
+  Typography,
   Table,
+  Switch,
   Select,
   Divider,
   Checkbox,
   Slider,
   Steps,
 } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import { ComponentsList } from "../../exportedFromAntd";
+import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
+import {
+  getFullDefaultPropsSettings,
+  getDefaultPropsSettings,
+} from "../index.export";
+import { ComponentsList, IconList, DynamicIcon } from "../../exportedFromAntd";
 /* MODELS Constructor */
 import {
   _Row,
@@ -39,16 +46,11 @@ import { UUID } from "../../../assets/extra/extra";
 /* STYLES */
 
 const formRef = React.createRef();
-class Table_Props extends React.Component {
+class Button_Props extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      allListColumns: [],
-      /* list of columns visualized inside select */
-      listColumns: [],
-      columnName: "",
-      columnDataIndex: "",
-
+      children: this.props.children,
       ...this.props.defaultSettings,
       ...this.props.Manager.ComponentCustomization,
     };
@@ -57,12 +59,10 @@ class Table_Props extends React.Component {
   onFinish = (values) => {
     let s = this.state;
     let p = this.props;
-    let { allListColumns } = s;
     let { currentStep } = p.Manager.Drawer_CreateNewComponent;
 
     p.SetComponentCustomization_({
       ...values,
-      allListColumns,
     });
     this.onClickNext(currentStep);
   };
@@ -96,36 +96,97 @@ class Table_Props extends React.Component {
     });
   };
 
-  onAddColumn = () => {
-    let s = this.state;
-    let p = this.props;
-    let { columnName, columnDataIndex, allListColumns } = s;
-
-    let newItem = { columnName, columnDataIndex };
-    let allListColumns_ = allListColumns || [];
-
-    /* update of allListColumns maintaining all previous data */
-    this.setState({
-      allListColumns: [...allListColumns_, newItem],
+  generatePropsFields = (fields, p) => {
+    return Object.entries(fields).map(([key, field]) => {
+      /* additional Options */
+      let opt = field.type === "boolean" ? { valuePropName: "checked" } : {};
+      return (
+        <Col span={6}>
+          <Form.Item
+            key={UUID()}
+            name={key}
+            label={field.fieldLabel}
+            tooltip={field.fieldHelper}
+            {...opt}
+            /*  rules={[{ required: true, message: "Please select cols!" }]} */
+          >
+            {this.NewItem(field, p)}
+          </Form.Item>
+        </Col>
+      );
     });
-    /* field reset */
-    this.setState({
-      columnName: "",
-      columnDataIndex: "",
-    });
+  };
 
-    /* const form = formRef.current;
-    form.setFieldsValue({ listColumns: [...listColumns, columnName] }); */
+  NewItem = (field, p) => {
+    /* risolvere il problema per cui un component non viene renderizzato... */
+    switch (field.type) {
+      case "string":
+        return <Input />;
+
+      case "number":
+        return <InputNumber />;
+
+      case "boolean":
+        return (
+          <Switch
+            checkedChildren={<CheckOutlined />}
+            unCheckedChildren={<CloseOutlined />}
+          />
+        );
+
+      case "icon":
+        return (
+          <Select
+            placeholder="Seleziona l'icona"
+            showSearch={true}
+            allowClear
+            /* options={field.IconList} */
+          >
+            {p.AntdIconList &&
+              Object.entries(p.AntdIconList).map(([key, icon]) => {
+                return (
+                  <Select.Option key={UUID()} value={key}>
+                    {DynamicIcon(key, { style: { fontSize: "20px" } })} {key}
+                  </Select.Option>
+                );
+              })}
+          </Select>
+        );
+      case "array":
+        /* return <Input />; */
+        return (
+          <Select
+            placeholder="Seleziona l'opzione"
+            showSearch={true}
+            options={field.items}
+          >
+            {/*  {field.items.map((item) => {
+              return (
+                <Select.Option key={UUID()} value={item.key}>
+                  {item.label}
+                </Select.Option>
+              );
+            })} */}
+          </Select>
+        );
+
+      case "object":
+        return "";
+
+      case "function":
+        return "";
+
+      default:
+        return "";
+    }
   };
 
   render() {
     let p = this.props;
     let s = this.state;
-    let { columnName, columnDataIndex, allListColumns } = s;
 
-    /* let { allListColumns } = this.props.Manager.ComponentConfig; */
-    let { rows } = p.Site.CurrentPage;
-
+    /* fields rappresents the type of field and its default Value */
+    /* let {  } = s; */
     let { componentName, /* children ,*/ defaultSettings, fields } = p;
     let { children } = s;
 
@@ -133,6 +194,7 @@ class Table_Props extends React.Component {
     let dataSource = p.Manager.ComponentCustomization;
 
     let modDataSource = {
+      children,
       ...defaultSettings,
       ...dataSource,
     };
@@ -149,64 +211,30 @@ class Table_Props extends React.Component {
         autoComplete="off"
       >
         <Form.Item
-          name="listColumns"
-          label="Seleziona le colonne della tabella"
-          tooltip="Seleziona le colonne della tabella, oppure puoi inserire nuove colonne. dataIndex rappresenta il nome della property dentro l'oggetto, a cui è associata la colonna."
-          rules={[{ required: true, message: "Please select cols!" }]}
+          name="children"
+          label="Label"
+          tooltip="Inserisci la stringa che comprarirà sul bottone."
         >
-          <Select
-            placeholder="Seleziona le colonne della tabella"
-            mode="multiple"
-            optionLabelProp="label"
-            dropdownRender={(menu) => (
-              <div>
-                {menu}
-                <Divider style={{ margin: "4px 0" }} />
-
-                <Row gutter={[24, 8]} style={{ padding: "12px" }}>
-                  <Col>
-                    <Input
-                      placeholder={"Column label"}
-                      value={columnName}
-                      onChange={(e) =>
-                        this.setState({ columnName: e.target.value })
-                      }
-                    />
-                  </Col>
-                  <Col>
-                    <Input
-                      placeholder={"Column dataIndex"}
-                      value={columnDataIndex}
-                      onChange={(e) =>
-                        this.setState({ columnDataIndex: e.target.value })
-                      }
-                    />
-                  </Col>
-                  <Col>
-                    <Button
-                      disabled={columnName && columnDataIndex ? false : true}
-                      icon={<PlusOutlined />}
-                      onClick={this.onAddColumn}
-                    >
-                      Aggiungi colonna alla selezione
-                    </Button>
-                  </Col>
-                </Row>
-              </div>
-            )}
-          >
-            {allListColumns &&
-              allListColumns.map(({ columnDataIndex, columnName }) => (
-                <Select.Option
-                  key={columnDataIndex}
-                  value={columnDataIndex}
-                  label={columnName}
-                >
-                  {`${columnName} | ${columnDataIndex}`}
-                </Select.Option>
-              ))}
-          </Select>
+          <Input />
         </Form.Item>
+
+        <Row gutter={[24, 24]}>{this.generatePropsFields(fields, p)}</Row>
+
+        <Divider />
+
+        <Row gutter={[16, 32]} justify={"center"}>
+          <Col span={24}>
+            <Badge status="success" text="Live Preview" />
+          </Col>
+          <Col>
+            <Button {...s} icon={s.icon && DynamicIcon(s.icon)}>
+              {children}
+            </Button>
+          </Col>
+        </Row>
+
+        <Divider />
+
         <Row justify="end">
           <Col>
             <Form.Item>
@@ -248,4 +276,4 @@ const mapDispatchToProps = (dispatch) => {
     },
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Table_Props);
+export default connect(mapStateToProps, mapDispatchToProps)(Button_Props);

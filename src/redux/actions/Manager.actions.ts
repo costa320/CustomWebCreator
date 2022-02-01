@@ -12,6 +12,9 @@ export function SetRowConfig(payload: any) {
 export function SetComponentConfig(payload: any) {
   return { type: "SET_ComponentConfig", payload: payload };
 }
+export function SetComponentCustomization(payload: any) {
+  return { type: "SET_ComponentCustomization", payload: payload };
+}
 export function SetAPIConfig(payload: any) {
   return { type: "SET_APIConfig", payload: payload };
 }

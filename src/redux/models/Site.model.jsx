@@ -1,3 +1,5 @@
+import { IconList } from "../../components/exportedFromAntd";
+
 const generalGrid_ = {
   span: 24,
   offset: null,
@@ -101,14 +103,19 @@ export class _Component {
 
 export class ArrayField {
   /* properties */
-  constructor(typeOfElementInside, properties) {
+  constructor(
+    items = [],
+    defaultItemValue = null,
+    fieldLabel = "Some text",
+    fieldHelper = "Text to help"
+  ) {
     this.type = "array";
-    this.items = this.generateItems(typeOfElementInside, properties);
+    this.items = items;
+    this.defaultValue = defaultItemValue;
+    this.fieldLabel = fieldLabel;
+    this.fieldHelper = fieldHelper;
   }
-  generateItems(typeOfElementInside, properties) {
-    if (typeOfElementInside === "object") return new ObjectField(properties);
-    else return new SimpleField(typeOfElementInside);
-  }
+  /* item => {value,label} */
 }
 
 export class ObjectField {
@@ -128,8 +135,16 @@ export class ObjectField {
 }
 
 export class SimpleField {
-  constructor(fieldType = "string" | "number" | "boolean") {
+  constructor(
+    fieldType = "string" | "number" | "boolean",
+    defaultValue = null,
+    fieldLabel = "Some text",
+    fieldHelper = "Text to help"
+  ) {
     this.type = fieldType;
+    this.defaultValue = defaultValue;
+    this.fieldLabel = fieldLabel;
+    this.fieldHelper = fieldHelper;
   }
 }
 export class ApiEndpointConfig {
@@ -137,5 +152,35 @@ export class ApiEndpointConfig {
     this.method = method;
     this.url = url;
     this.headers = headers;
+  }
+}
+
+export class IconField {
+  constructor(
+    defaultValue = null,
+    fieldLabel = "Some text",
+    fieldHelper = "Text to help"
+  ) {
+    this.type = "icon";
+    this.defaultValue = defaultValue;
+    this.IconList = this.getFormattedIconList(IconList());
+    this.fieldLabel = fieldLabel;
+    this.fieldHelper = fieldHelper;
+  }
+
+  getFormattedIconList(iconList) {
+    return iconList
+      ? Object.entries(iconList).map(([key, IconComponent]) => ({
+          label: key,
+          value: key,
+          IconComponent,
+        }))
+      : [];
+  }
+}
+export class FunctionField {
+  constructor(defaultValue = null) {
+    this.type = "function";
+    this.defaultValue = defaultValue;
   }
 }

@@ -4,6 +4,7 @@ import * as antd from "antd";
 import * as antdIcons from "@ant-design/icons";
 /* Layers */
 import ApiLayerWrapper from "./ApiLayerWrapper";
+import PropsLayerWrapper from "./PropsLayerWrapper";
 /* MODELS */
 import {
   ArrayField,
@@ -16,9 +17,13 @@ const IComponents = {
   ...antd,
 };
 
-const IIcons = {
-  ...antdIcons,
-};
+const IIcons = {};
+
+/* pulizia icone */
+antdIcons &&
+  Object.entries(antdIcons).map(([key, value]) => {
+    if (value.$$typeof) IIcons[key] = value;
+  });
 
 const FormListComponents = {
   Input: {},
@@ -30,7 +35,8 @@ const FormListComponents = {
 
 /* GET COMPONENT */
 /* imported Antd Components */
-export function DynamicComponent({ name, props, ApiEndpointConfig }) {
+export function DynamicComponent(component) {
+  let { name, props, ApiEndpointConfig, fullConfiguration } = component;
   if (IComponents[name]) {
     const TheComponent = IComponents[name];
     return (
@@ -67,12 +73,24 @@ export function FormComponentsList() {
 /* GET ICON */
 /* imported Antd Icons */
 export function DynamicIcon(name, props) {
-  /* controll if the component was enabled/in whitelist */
-  const TheComponent = IIcons[name];
-  return <TheComponent {...props} />;
+  // let Fun = IIcons["setTwoToneColor"];
+  // let Alert = IIcons["AlertFilled"];
+
+  // let typeOf$$ = Fun.$$typeof; /* undefined */
+  // let typeOfAlert$$ = Alert.$$typeof; /* Symbol(react.forward_ref) */
+
+  // let type1 = typeof Fun;
+  // let type2 = typeof Alert;
+
+  if (IIcons[name]) {
+    const TheIcon = IIcons[name];
+    return <TheIcon {...props} />;
+  } else {
+    return "component non esiste";
+  }
 }
 
 /* GET ICONS LIST */
-export function IconsList() {
+export function IconList() {
   return IIcons;
 }

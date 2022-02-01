@@ -24,7 +24,8 @@ import { PlusOutlined } from "@ant-design/icons";
 import APIConfiguration from "./StepsForNewConfigurations/API.configuration";
 import RowConfiguration from "./StepsForNewConfigurations/Row.configuration";
 import ComponentConfiguration from "./StepsForNewConfigurations/Component.configuration";
-import SummaryConfiguration from "./StepsForNewConfigurations/SummaryStep";
+import ComponentCustomization from "./StepsForNewConfigurations/Component.customization";
+import SummaryStep from "./StepsForNewConfigurations/SummaryStep";
 /* MODELS Constructor */
 import {
   _Row,
@@ -35,7 +36,6 @@ import {
 } from "../redux/models/Site.model";
 /* HELPERS */
 import { UUID } from "../assets/extra/extra";
-import SummaryStep from "./StepsForNewConfigurations/SummaryStep";
 /* STYLES */
 
 const formRef = React.createRef();
@@ -113,6 +113,13 @@ class DrawerCreateNewRow extends React.Component {
       },
       {
         stepId: 2,
+        title: "Customizzazione del componente",
+        description: "Adattamento del componente ad uno stile grafico",
+        status: null,
+        component: ComponentCustomization,
+      },
+      {
+        stepId: 3,
         title: "Configurazione delle API.",
         description:
           "Configurazione degli end-point/dati-static da cui il componente sarà alimentato.",
@@ -120,7 +127,7 @@ class DrawerCreateNewRow extends React.Component {
         component: APIConfiguration,
       },
       {
-        stepId: 3,
+        stepId: 4,
         title: "Riepilogo e test",
         description: "",
         status: null,
