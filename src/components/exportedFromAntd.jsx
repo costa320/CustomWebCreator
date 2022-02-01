@@ -40,7 +40,10 @@ export function DynamicComponent(component) {
   if (IComponents[name]) {
     const TheComponent = IComponents[name];
     return (
-      <ApiLayerWrapper config={ApiEndpointConfig}>
+      <ApiLayerWrapper
+        config={ApiEndpointConfig}
+        fullConfiguration={fullConfiguration}
+      >
         <TheComponent {...props} />
       </ApiLayerWrapper>
     );
@@ -72,7 +75,7 @@ export function FormComponentsList() {
 
 /* GET ICON */
 /* imported Antd Icons */
-export function DynamicIcon(name, props) {
+export function DynamicIcon(name, props = {}) {
   // let Fun = IIcons["setTwoToneColor"];
   // let Alert = IIcons["AlertFilled"];
 

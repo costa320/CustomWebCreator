@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { SetRoutes } from "../../redux/actions/Session.actions";
 import { SET_CurrentPage } from "../../redux/actions/Site.actions";
 import {
+  RESET_REDUCER_MANAGER,
   SetDrawerCreateNewComponent,
   SetSummary,
 } from "../../redux/actions/Manager.actions";
@@ -124,7 +125,12 @@ class SummaryStep extends React.Component {
     };
 
     p.SET_CurrentPage_({ rows: tempRows });
+    this.resetDrawerManagerToDefault();
   };
+
+  resetDrawerManagerToDefault() {
+    this.props.RESET_REDUCER_MANAGER_();
+  }
 
   render() {
     let p = this.props;
@@ -192,6 +198,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     SetRoutes_: (routes) => {
       dispatch(SetRoutes(routes));
+    },
+    RESET_REDUCER_MANAGER_: () => {
+      dispatch(RESET_REDUCER_MANAGER());
     },
     SetDrawerCreateNewComponent_: (newProps) => {
       dispatch(SetDrawerCreateNewComponent(newProps));

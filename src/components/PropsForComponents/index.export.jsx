@@ -116,8 +116,8 @@ export function getFullDefaultPropsSettings(name) {
 
 /* will create plain props object e.g. {color:'red'...} with default settings */
 export function getDefaultPropsSettings(name) {
-  const defaultPropsSettings = defaultSettings[name].fields;
-  if (defaultPropsSettings) {
+  if (defaultSettings[name]?.fields) {
+    const defaultPropsSettings = defaultSettings[name].fields;
     let newObjProps = {};
     Object.keys(defaultPropsSettings).forEach((key) => {
       newObjProps[key] = defaultPropsSettings[key].defaultValue;
@@ -126,4 +126,8 @@ export function getDefaultPropsSettings(name) {
   } else {
     return `Le default Props per il seguente (${name}) component non esistono`;
   }
+}
+
+export function DidDefaultPropsSettingsExist(name) {
+  return defaultSettings[name];
 }

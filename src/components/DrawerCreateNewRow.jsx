@@ -3,7 +3,10 @@ import React from "react";
 import { connect } from "react-redux";
 import { SetRoutes } from "../redux/actions/Session.actions";
 import { SET_CurrentPage } from "../redux/actions/Site.actions";
-import { SetDrawerCreateNewComponent } from "../redux/actions/Manager.actions";
+import {
+  RESET_REDUCER_MANAGER,
+  SetDrawerCreateNewComponent,
+} from "../redux/actions/Manager.actions";
 /* ANTD */
 import {
   Row,
@@ -51,11 +54,7 @@ class DrawerCreateNewRow extends React.Component {
   onClose = () => {
     /* const form = formRef.current;
     form.resetFields(); */
-    this.props.SetDrawerCreateNewComponent_({
-      dataSource: {},
-      visible: false,
-      currentStep: 0,
-    });
+    this.props.RESET_REDUCER_MANAGER_();
   };
 
   onBack = () => {
@@ -144,6 +143,7 @@ class DrawerCreateNewRow extends React.Component {
     return (
       <>
         <Drawer
+          destroyOnClose
           title="Configuratore"
           width={"80%"}
           onClose={this.onClose}
@@ -196,6 +196,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     SetRoutes_: (routes) => {
       dispatch(SetRoutes(routes));
+    },
+    RESET_REDUCER_MANAGER_: () => {
+      dispatch(RESET_REDUCER_MANAGER());
     },
     SetDrawerCreateNewComponent_: (newProps) => {
       dispatch(SetDrawerCreateNewComponent(newProps));

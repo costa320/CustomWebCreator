@@ -1,3 +1,6 @@
+export function RESET_REDUCER_MANAGER(payload: any) {
+  return { type: "RESET_REDUCER", payload: payload };
+}
 export function SetDatiReduxManager(payload: any) {
   return { type: "SET_DATI_REDUX", payload: payload };
 }

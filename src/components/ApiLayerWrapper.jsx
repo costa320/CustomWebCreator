@@ -36,6 +36,7 @@ import {
   _vgutters,
 } from "../redux/models/Site.model";
 /* HELPERS */
+import { DynamicIcon } from "./exportedFromAntd";
 import { UUID } from "../assets/extra/extra";
 import SummaryStep from "./StepsForNewConfigurations/SummaryStep";
 /* STYLES */
@@ -71,20 +72,79 @@ class DrawerCreateNewRow extends React.Component {
       });
   };
 
-  injectPropsIntoChildren(children, s) {
+  /* injecting data from APi calls into children */
+  injectApiPropsIntoChildren(children, APIConfig) {
+    let s = this.state;
+    let { apiDynamicData, staticData } = APIConfig;
+
+    let dynamicProps = {};
+    /* apiDynamicData===true => load data from api */
+    /* apiDynamicData===false => load data from staticData */
+    if (apiDynamicData) {
+      dynamicProps.dataSource = s.data;
+      dynamicProps.loading = s.loading;
+    } else {
+      dynamicProps.dataSource = staticData;
+    }
+
     return React.Children.map(children, (child) => {
       // Checking isValidElement is the safe way and avoids a typescript
       // error too.
       if (React.isValidElement(child)) {
         /* injecting some props to cloned children */
         return React.cloneElement(child, {
+          /* existeing props */
           ...child.props,
-          dataSource: s.data,
-          loading: s.loading,
+          /* custom props */
+          ...dynamicProps,
         });
       }
       return child;
     });
+  }
+
+  /* injecting custom data into children */
+  injectCustomPropsIntoChildren(children, s) {
+    return React.Children.map(children, (child) => {
+      // Checking isValidElement is the safe way and avoids a typescript
+      // error too.
+      if (React.isValidElement(child)) {
+        /* injecting some props to cloned children */
+        return React.cloneElement(child, {
+          /* existeing props */
+          ...child.props,
+          /* custom dynamic props (eg icon name into real icons) */
+          icon: DynamicIcon(child.props.icon),
+        });
+      }
+      return child;
+    });
+  }
+
+  CustomInjectManager(s) {
+    let p = this.props;
+    let { config, fullConfiguration } = p;
+    let {
+      APIConfig,
+      ComponentConfig,
+      ComponentCustomization,
+      Drawer_CreateNewComponent,
+      RowConfig,
+      Summary,
+    } = fullConfiguration;
+
+    switch (ComponentConfig.componentName) {
+      case "Table":
+        return this.injectApiPropsIntoChildren(p.children, APIConfig);
+      case "Button":
+        return this.injectCustomPropsIntoChildren(p.children, s);
+      default:
+        return p.children;
+    }
+
+    /*     return config.url
+      ? this.injectApiPropsIntoChildren(p.children, s)
+      : this.injectCustomPropsIntoChildren(p.children, s); */
   }
 
   render() {
@@ -93,9 +153,7 @@ class DrawerCreateNewRow extends React.Component {
     let { config } = p;
     let { data, loading } = s;
 
-    return config.url
-      ? this.injectPropsIntoChildren(p.children, s)
-      : p.children;
+    return this.CustomInjectManager(s);
   }
 }
 /* quale reducer vuoi utilizzare qui? solo math */

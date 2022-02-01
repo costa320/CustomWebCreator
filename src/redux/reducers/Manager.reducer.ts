@@ -3,32 +3,39 @@ import {
   Section_Autocertificazioni, Section_Messaggi,
 } from '../models/Home';
 
-const Manager = (
-  state: State = {
-    Drawer_CreateNewComponent: {
-      dataSource: {},
-      visible: false,
-      currentStep: 0
-    },
-    RowConfig: {
-
-    },
-    ComponentConfig: {
-
-    },
-    ComponentCustomization: {
-
-    },
-    APIConfig: {
-
-    },
-    Summary: {},
+const initialState = {
+  Drawer_CreateNewComponent: {
+    dataSource: {},
+    visible: false,
+    currentStep: 0
+  },
+  RowConfig: {
 
   },
+  ComponentConfig: {
+
+  },
+  ComponentCustomization: {
+
+  },
+  APIConfig: {
+
+  },
+  Summary: {},
+
+}
+
+const Manager = (
+  state: State = { ...initialState },
   action: Action
 ) => {
   let newOBJ: any = {}
   switch (action.type) {
+    case "RESET_REDUCER":
+      state = {
+        ...initialState
+      };
+      break;
     case "SET_DATI_REDUX":
       newOBJ = {
         ...state,
@@ -121,3 +128,4 @@ interface Action {
   type: string,
   payload: any
 }
+

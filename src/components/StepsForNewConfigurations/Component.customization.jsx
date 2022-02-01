@@ -39,6 +39,7 @@ import {
   DynamicPropsComponent,
   getDefaultPropsSettings,
   getFullDefaultPropsSettings,
+  DidDefaultPropsSettingsExist,
 } from "../PropsForComponents/index.export";
 /* STYLES */
 
@@ -47,6 +48,9 @@ class ComponentCustomization extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      componentExist: DidDefaultPropsSettingsExist(
+        this.props.Manager.ComponentConfig.componentName
+      ),
       /* preload dei vari components, per renderli disponibili dopo */
       AntdComponentList: ComponentsList(),
       AntdIconList: IconList(),
@@ -65,8 +69,9 @@ class ComponentCustomization extends React.Component {
   render() {
     let p = this.props;
     let s = this.state;
-    let { AntdComponentList, AntdIconList } = s;
+    let { AntdComponentList, AntdIconList, componentExist } = s;
 
+    let { currentStep } = p.Manager.Drawer_CreateNewComponent;
     let { componentName } = p.Manager.ComponentConfig;
     let dataSource = p.Manager.ComponentCustomization;
     let { rows } = p.Site.CurrentPage;
@@ -84,6 +89,19 @@ class ComponentCustomization extends React.Component {
             AntdComponentList,
             AntdIconList,
           })}
+
+        {!componentExist && (
+          <Row justify={"end"} style={{ marginTop: "24px" }}>
+            <Col>
+              <Button
+                type={"primary"}
+                onClick={() => this.onClickNext(currentStep)}
+              >
+                Vai avanti
+              </Button>
+            </Col>
+          </Row>
+        )}
       </>
     );
   }
