@@ -10,7 +10,9 @@
     "build:prod": "grunt bump:patch && webpack --config ./webpack.prod.config.js --progress",
     "build:dev": "grunt bump:patch && webpack --progress",
     "azurepostscript": "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag v$PACKAGE_VERSION && git push --tags",
-    "start": "npm run build:prod&&node server.js"
+    "start": "npm run build-heroku:prod&&node server.js",
+    "build-heroku:prod": "webpack --config ./webpack.prod.config.js --progress",
+   
   },
   "author": "Constantin Iacovlev",
   "license": "ISC",
@@ -105,8 +107,5 @@
       "last 1 safari version",
       "IE 11"
     ]
-  },
-  "optionalDependencies": {
-    "fsevents": "^2.3.2"
   }
 }
