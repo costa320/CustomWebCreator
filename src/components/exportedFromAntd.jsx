@@ -4,13 +4,14 @@ import * as antd from "antd";
 import * as antdIcons from "@ant-design/icons";
 /* Layers */
 import ApiLayerWrapper from "./ApiLayerWrapper";
-import PropsLayerWrapper from "./PropsLayerWrapper";
 /* MODELS */
 import {
   ArrayField,
   ObjectField,
   SimpleField,
 } from "../redux/models/Site.model";
+/* COMPONENTS */
+import { DynamicViewerComponent } from "./PropsForComponents/index.export";
 
 /* all components exported from antd */
 const IComponents = {
@@ -38,13 +39,12 @@ const FormListComponents = {
 export function DynamicComponent(component) {
   let { name, props, ApiEndpointConfig, fullConfiguration } = component;
   if (IComponents[name]) {
-    const TheComponent = IComponents[name];
     return (
       <ApiLayerWrapper
         config={ApiEndpointConfig}
         fullConfiguration={fullConfiguration}
       >
-        <TheComponent {...props} />
+        {DynamicViewerComponent(name, { fullConfiguration })}
       </ApiLayerWrapper>
     );
   } else {

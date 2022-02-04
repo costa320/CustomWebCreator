@@ -1,13 +1,13 @@
 import React from "react";
 /* REDUX */
 import { connect } from "react-redux";
-import { SetRoutes } from "../../../redux/actions/Session.actions";
-import { SET_CurrentPage } from "../../../redux/actions/Site.actions";
+import { SetRoutes } from "../../../../redux/actions/Session.actions";
+import { SET_CurrentPage } from "../../../../redux/actions/Site.actions";
 import {
   SetDrawerCreateNewComponent,
   SetComponentConfig,
   SetComponentCustomization,
-} from "../../../redux/actions/Manager.actions";
+} from "../../../../redux/actions/Manager.actions";
 /* ANTD */
 import {
   Row,
@@ -31,8 +31,8 @@ import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
 import {
   getFullDefaultPropsSettings,
   getDefaultPropsSettings,
-} from "../index.export";
-import { ComponentsList, IconList, DynamicIcon } from "../../exportedFromAntd";
+} from "../../index.export";
+import { ComponentsList, IconList, DynamicIcon } from "../../../exportedFromAntd";
 /* MODELS Constructor */
 import {
   _Row,
@@ -40,9 +40,9 @@ import {
   _Component,
   _hgutters,
   _vgutters,
-} from "../../../redux/models/Site.model";
+} from "../../../../redux/models/Site.model";
 /* HELPERS */
-import { UUID } from "../../../assets/extra/extra";
+import { UUID } from "../../../../assets/extra/extra";
 /* STYLES */
 
 const formRef = React.createRef();

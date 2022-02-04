@@ -7,15 +7,23 @@ import {
   ApiEndpointConfig,
   IconField,
   FunctionField,
+  _Component,
 } from "../../redux/models/Site.model";
-/* COMPONENT PROPS */
-import Table from "./components/Table.props";
-/* import Form from "./components/Form.props"; */
-import Button from "./components/Button.props";
+/* COMPONENTS */
+import Table_props from "./components/Table/Table.props";
+import Table_viewer from "./components/Table/Table.viewer";
 
+import Button_props from "./components/Button/Button.props";
+import Button_viewer from "./components/Button/Button.viewer";
+
+import Card_props from "./components/Card/Card.props";
+import Card_viewer from "./components/Card/Card.viewer";
+
+/* PropsComponents=> {name,propsInterface,wrapperViewer} */
 const PropsComponents = {
-  Table,
-  Button,
+  Table: new _Component("Table", Table_props, Table_viewer),
+  Button: new _Component("Button", Button_props, Button_viewer),
+  Card: new _Component("Card", Card_props, Card_viewer),
 };
 
 const defaultSettings = {
@@ -89,18 +97,110 @@ const defaultSettings = {
       onClick: new FunctionField(),
     },
   },
+  Card: {
+    children: "Testo di esempio",
+    fields: {
+      title: new SimpleField(
+        "string",
+        "Default card",
+        "Title",
+        "Card title",
+        true
+      ),
+      cardMetaTitle: new SimpleField(
+        "string",
+        "Card title",
+        "Meta Title",
+        "Title inside Meta Card",
+        true
+      ),
+      cardMetaDescription: new SimpleField(
+        "string",
+        "This is the description",
+        "Meta Description",
+        "Description inside Meta Card",
+        true
+      ),
+      size: new ArrayField(
+        [
+          { value: "default", label: "Default" },
+          { value: "small", label: "Small" },
+        ],
+        "default",
+        "Size",
+        "Set the size of card"
+      ),
+      hoverable: new SimpleField(
+        "boolean",
+        true,
+        "Hoverable",
+        "Lift up when hovering card"
+      ),
+      extra: new ArrayField(
+        [{ value: "more", label: "More", icon: null }],
+        ["more"],
+        "Extra",
+        "Content to render in the top-right corner of the card",
+        true
+      ),
+      bordered: new SimpleField(
+        "boolean",
+        true,
+        "Bordered",
+        "Toggles rendering of the border around the card"
+      ),
+      actions: new ArrayField(
+        [
+          { value: "edit", label: "Edit", icon: "EditOutlined" },
+          { value: "elipses", label: "Elipses", icon: "EllipsisOutlined" },
+          { value: "settings", label: "Settings", icon: "SettingOutlined" },
+        ],
+        ["edit", "elipses", "settings"],
+        "Actions",
+        "The action list, shows at the bottom of the Card",
+        true
+      ),
+      cover: new ArrayField(
+        [
+          {
+            value:
+              "https://image.shutterstock.com/image-vector/abstract-financial-chart-arrow-260nw-1028158363.jpg",
+            label: "Google Image",
+          },
+          {
+            value:
+              "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
+            label: "Bear Image",
+          },
+        ],
+        "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
+        "Cover",
+        "Card cover",
+        true
+      ),
+    },
+  },
   Table: {
     children: [],
     fields: {},
   },
 };
 
-export function DynamicPropsComponent(name, props) {
-  const ThePropsComponent = PropsComponents[name];
+export function DynamicPropsComponent(name, props = {}) {
+  const ThePropsComponent = PropsComponents[name].propsInterface;
   if (ThePropsComponent) {
     return <ThePropsComponent {...props} componentName={name} />;
   } else {
     return `Le Props per il seguente (${name}) component non esistono`;
+  }
+}
+
+export function DynamicViewerComponent(name, props = {}) {
+  const TheViewerComponent = PropsComponents[name].wrapperViewer;
+  if (TheViewerComponent) {
+    return <TheViewerComponent {...props} componentName={name} />;
+  } else {
+    return `Il DynamicViewerComponent per il seguente (${name}) component non esistono`;
   }
 }
 

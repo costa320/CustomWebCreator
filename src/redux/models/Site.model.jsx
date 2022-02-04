@@ -1,10 +1,10 @@
 import { IconList } from "../../components/exportedFromAntd";
 
 const generalGrid_ = {
-  span: 24,
+  span: 6,
   offset: null,
   flex: null,
-  order: 1,
+  order: null,
 };
 const complexGrid_ = {
   xs: {
@@ -61,7 +61,7 @@ export class _Row {
     vgutters = 16,
     justify = "start",
     align = null,
-    cols = [new _Col(0, row_id)]
+    cols = new Array(4).fill().map((e, col_i) => new _Col(col_i, row_id))
   ) {
     // Constructor
     this.row_id = row_id;
@@ -93,11 +93,11 @@ export class _Col {
 }
 
 export class _Component {
-  constructor(name = "", props = {}, ApiEndpoint = "") {
+  constructor(name = "", propsInterface, wrapperViewer) {
     // Constructor
     this.name = name;
-    this.props = props;
-    this.ApiEndpoint = ApiEndpoint;
+    this.propsInterface = propsInterface;
+    this.wrapperViewer = wrapperViewer;
   }
 }
 
@@ -107,15 +107,17 @@ export class ArrayField {
     items = [],
     defaultItemValue = null,
     fieldLabel = "Some text",
-    fieldHelper = "Text to help"
+    fieldHelper = "Text to help",
+    hidden = false
   ) {
     this.type = "array";
     this.items = items;
     this.defaultValue = defaultItemValue;
     this.fieldLabel = fieldLabel;
     this.fieldHelper = fieldHelper;
+    this.hidden = hidden;
   }
-  /* item => {value,label} */
+  /* item => {key,value,label} key could be === value || could be undefined */
 }
 
 export class ObjectField {
@@ -139,12 +141,14 @@ export class SimpleField {
     fieldType = "string" | "number" | "boolean",
     defaultValue = null,
     fieldLabel = "Some text",
-    fieldHelper = "Text to help"
+    fieldHelper = "Text to help",
+    hidden = false
   ) {
     this.type = fieldType;
     this.defaultValue = defaultValue;
     this.fieldLabel = fieldLabel;
     this.fieldHelper = fieldHelper;
+    this.hidden = hidden;
   }
 }
 export class ApiEndpointConfig {

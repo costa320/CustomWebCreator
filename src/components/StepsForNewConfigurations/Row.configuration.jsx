@@ -83,7 +83,27 @@ class RowConfigurator extends React.Component {
   onAddRow = () => {
     let p = this.props;
     const currentRows = p.Site.CurrentPage.rows;
-    const tempRows = [...currentRows, new _Row(currentRows.length++)];
+    const tempRows = [...currentRows, new _Row(currentRows.length)];
+    p.SET_CurrentPage_({ rows: tempRows });
+    p.SetDrawerCreateNewComponent_({
+      dataSource: tempRows[tempRows.length - 1],
+    });
+  };
+
+  onAddCol = () => {
+    let s = this.state;
+    let p = this.props;
+    let { row_id } = s;
+
+    let tempRows = [...p.Site.CurrentPage.rows];
+    const rowIndex = tempRows.findIndex((el) => el.row_id === row_id);
+
+    let cols = [...tempRows[rowIndex].cols];
+    /* adding new col */
+    cols.push(new _Col(cols.length, row_id));
+
+    tempRows[rowIndex].cols = cols;
+
     p.SET_CurrentPage_({ rows: tempRows });
     p.SetDrawerCreateNewComponent_({
       dataSource: tempRows[tempRows.length - 1],
@@ -164,7 +184,30 @@ class RowConfigurator extends React.Component {
           tooltip="Seleziona la colonna su cui vorrai inserire il componente, o creane una nuova."
           rules={[{ required: true, message: "Please select gender!" }]}
         >
-          <Select placeholder="Seleziona la riga">
+          <Select
+            placeholder="Seleziona la riga"
+            dropdownRender={(menu) => (
+              <div>
+                {menu}
+                <Divider style={{ margin: "4px 0" }} />
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "nowrap",
+                    padding: 8,
+                  }}
+                >
+                  <Button
+                    disabled={!(row_id >= 0)}
+                    onClick={this.onAddCol}
+                    icon={<PlusOutlined />}
+                  >
+                    Aggiungi Colonna
+                  </Button>
+                </div>
+              </div>
+            )}
+          >
             {cols &&
               cols.map((col) => {
                 return (

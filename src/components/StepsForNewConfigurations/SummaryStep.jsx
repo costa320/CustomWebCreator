@@ -35,7 +35,6 @@ import {
 } from "../../redux/models/Site.model";
 /* HELPERS */
 import { UUID } from "../../assets/extra/extra";
-import { PropsGeneration } from "../PropsForComponents/props.generation";
 
 /* STYLES */
 
@@ -112,14 +111,6 @@ class SummaryStep extends React.Component {
 
     tempRows[i_row].cols[i_col].component = {
       name: ComponentConfig.componentName,
-      props: PropsGeneration(
-        ComponentConfig.componentName,
-        RowConfig,
-        ComponentConfig,
-        ComponentCustomization,
-        APIConfig,
-        Summary
-      ),
       fullConfiguration: p.Manager,
       ApiEndpointConfig: new ApiEndpointConfig(APIConfig.apiUrlForDataSource),
     };

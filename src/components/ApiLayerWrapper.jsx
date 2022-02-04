@@ -81,10 +81,8 @@ class DrawerCreateNewRow extends React.Component {
     /* apiDynamicData===true => load data from api */
     /* apiDynamicData===false => load data from staticData */
     if (apiDynamicData) {
-      dynamicProps.dataSource = s.data;
+      dynamicProps.data = s.data;
       dynamicProps.loading = s.loading;
-    } else {
-      dynamicProps.dataSource = staticData;
     }
 
     return React.Children.map(children, (child) => {
