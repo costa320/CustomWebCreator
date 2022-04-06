@@ -31,7 +31,7 @@ jobs:
       - name: npm install, build, and test react app
         run: |
           npm install
-          npm run build:prod
+          npm run build:azure
           npm run test --if-present
 
       - name: Upload artifact for deployment job

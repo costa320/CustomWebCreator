@@ -9,9 +9,7 @@
     "start:serve:prod": "webpack serve --open --mode development --config ./webpack.prod.config.js --progress",
     "build:prod": "grunt bump:patch && webpack --config ./webpack.prod.config.js --progress",
     "build:dev": "grunt bump:patch && webpack --progress",
-    "azurepostscript": "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag v$PACKAGE_VERSION && git push --tags",
     "start": "npm run build-heroku:prod&&node server.js",
-    "build-heroku:prod": "webpack --config ./webpack.prod.config.js --progress",
     "build:azure":"webpack --config ./webpack.prod.config.js --progress"
    
   },
